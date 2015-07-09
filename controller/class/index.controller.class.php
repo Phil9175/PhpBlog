@@ -6,7 +6,9 @@ class index {
 	
 	public function defaultPage() {
 		$view = new view("index", "index");
-		$view->assign("prenom", "ppg");
+		$view->assign("meta_title", "Mon titre a moi");
+		$view->assign("meta_description", "Ma description a moi");
+		
 	}
 	
 	public function recherche(){
