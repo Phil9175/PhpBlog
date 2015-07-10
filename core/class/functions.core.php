@@ -7,3 +7,4 @@ function is_controller($class_name){
 		return FALSE;
 	}
 }
+define("ADRESSE_SITE", "http://".$_SERVER['HTTP_HOST']);

@@ -7,7 +7,7 @@ class page {
 		$this->url = explode("/", trim($_SERVER['REQUEST_URI'], "/"));
 		$article = new article("article");
 		$article->getOneBy($this->url[0], "article_url", "article", "article");
-		$articles = $article->getResults("","","article");
+		$articles = $article->getResults("","","article", "ORDER BY id");
 		$view = new view("article", "index", $article->article["type_page"]);
 		$view->assign("allArticles", $articles);
 		$view->assign("titre", $article->article["titre"]);

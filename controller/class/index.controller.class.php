@@ -8,7 +8,9 @@ class index {
 		$view = new view("index", "index");
 		$view->assign("meta_title", "Mon titre a moi");
 		$view->assign("meta_description", "Ma description a moi");
-		
+		$article = new article;
+		$articles = $article->getResults("","","article", "ORDER BY id");
+		$view->assign("allArticles", $articles);
 	}
 	
 	public function recherche(){
