@@ -57,7 +57,7 @@ class bdd {
 		$query = $this->connexion->prepare($sql);
 		$query->execute([$column=>$value]);
 		$query->setFetchMode(PDO::FETCH_ASSOC);
-		$data = $query->FETCH();
+		$data = $query->fetch(PDO::FETCH_ASSOC);
 		if ($class == "article"){
 		if (!empty($data)){
 			foreach($data as $propName => $propValue){
@@ -73,14 +73,13 @@ class bdd {
 		}
 	}
 	
-	public function getResults($value, $column = "id", $table){
+	public function getResults($value, $column = "id", $table, $order){
 		$requete = (empty($column))?"":" WHERE ".$column."=:".$column;
-		$sql = "SELECT * FROM ".$table.$requete;
-		$query = $this->connexion->prepare($sql);
+		$sql = "SELECT * FROM ".$table.$requete." ".$order;
+ 		$query = $this->connexion->prepare($sql);
 		$query->execute([$column=>$value]);
 		$query->setFetchMode(PDO::FETCH_ASSOC);
-		$data = $query->FETCH();
-		return $data;
+		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
 	
 	public function query(){

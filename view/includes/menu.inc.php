@@ -1,6 +1,6 @@
 <body>
 <div class="grid grid-pad">
-  <div class="col-2-8"> <img src="<?php $_SERVER['HTTP_HOST']; ?>/images/JDR.png" height="40px"><br>
+  <div class="col-2-8"> <a href="<?php echo ADRESSE_SITE; ?>"><img src="<?php $_SERVER['HTTP_HOST']; ?>/images/JDR.png" height="40px"></a><br>
     <em>Journal du Référencement</em> </div>
   <div class="col-4-8"> Bienvenue sur le Journal Du Référencement<br>
     Veille technologique sur le referencement, nous vous montrerons les techniques de<br>
@@ -19,7 +19,7 @@ echo $formulaire->afficheForm();
     <div class="module">
     <div id="menu">
     <ul>
-    <li><a href="/index">Accueil</a>
+    <li><a href="<?php echo ADRESSE_SITE; ?>">Accueil</a>
     <li>Item 2
     <li>Item 3
     <li>Item 4
