@@ -5,7 +5,6 @@ class bdd {
 	private $bddlogin = "root";
 	private $bddpass = "root";
 	private $bddname = "journaldureferencement";
-	private $table;
 	private $classe;
 	public $article = [];
 	public $result = [];
@@ -14,7 +13,6 @@ class bdd {
 	
 	public function __construct(){
 		self::Connection();
-		$this->table = get_called_class();
 		$this->classe = get_called_class();
 	}
 
@@ -54,7 +52,7 @@ class bdd {
 		}
 	}
 	
-	public function getOneBy($value, $column = "id", $class = "", $table = self::table){
+	public function getOneBy($value, $column = "id", $class = "", $table){
 		$sql = "SELECT * FROM ".$table." WHERE ".$column."=:".$column." limit 1";
 		$query = $this->connexion->prepare($sql);
 		$query->execute([$column=>$value]);
@@ -75,10 +73,14 @@ class bdd {
 		}
 	}
 	
-	public function getResult(){
-	}
-	
-	public function getResults(){
+	public function getResults($value, $column = "id", $table){
+		$requete = (empty($column))?"":" WHERE ".$column."=:".$column;
+		$sql = "SELECT * FROM ".$table.$requete;
+		$query = $this->connexion->prepare($sql);
+		$query->execute([$column=>$value]);
+		$query->setFetchMode(PDO::FETCH_ASSOC);
+		$data = $query->FETCH();
+		return $data;
 	}
 	
 	public function query(){

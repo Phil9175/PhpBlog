@@ -5,9 +5,11 @@ class page {
 	
 	public function __construct() {
 		$this->url = explode("/", trim($_SERVER['REQUEST_URI'], "/"));
-		$article = new article;
+		$article = new article("article");
 		$article->getOneBy($this->url[0], "article_url", "article", "article");
+		$articles = $article->getResults("","","article");
 		$view = new view("article", "index", $article->article["type_page"]);
+		$view->assign("allArticles", $articles);
 		$view->assign("titre", $article->article["titre"]);
 		$view->assign("contenu", $article->article["contenu"]);
 		$view->assign("meta_title", $article->article["meta_title"]);
