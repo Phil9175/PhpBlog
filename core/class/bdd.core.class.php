@@ -6,7 +6,6 @@ class bdd {
 	private $bddpass = "root";
 	private $bddname = "journaldureferencement";
 	private $classe;
-	public $article = [];
 	public $result = [];
 	protected $connexion;
 	
@@ -27,17 +26,16 @@ class bdd {
 			$this->connexion = $conn;
 	}
   
-  	public function save(){
+  	public function save($table){
 		$all_vars = array_keys(get_object_vars($this));
 		$pdo_vars = array_keys(get_class_vars(get_class()));
 		$child_vars = array_diff($all_vars, $pdo_vars);
-		
 		if (is_numeric($this->id)){
 			foreach($child_vars as $var){
 				$array_to_execute[$var] = $this->$var;
 				$set_sql[] = $var."=:".$var;
 			}
-			$sql = "UPDATE ".$this->table." SET ".implode(",", $set_sql). "where id = :id;";
+			$sql = "UPDATE ".$table." SET ".implode(",", $set_sql). " where id = :id;";
 			$query = $this->connexion->prepare($sql);
 			$query->execute($array_to_execute);
 		}else{
@@ -52,24 +50,16 @@ class bdd {
 		}
 	}
 	
-	public function getOneBy($value, $column = "id", $class = "", $table){
+	public function getOneBy($value, $column = "id", $table){
 		$sql = "SELECT * FROM ".$table." WHERE ".$column."=:".$column." limit 1";
 		$query = $this->connexion->prepare($sql);
 		$query->execute([$column=>$value]);
 		$query->setFetchMode(PDO::FETCH_ASSOC);
-		$data = $query->fetch(PDO::FETCH_ASSOC);
-		if ($class == "article"){
+		$data = $query->fetch(PDO::FETCH_ASSOC);	
 		if (!empty($data)){
-			foreach($data as $propName => $propValue){
-				$this->article[$propName] = $propValue;
-			}
-		}
-		}else{
-			if (!empty($data)){
 			foreach($data as $propName => $propValue){
 				$this->result[$propName] = $propValue;
 			}
-		}
 		}
 	}
 	

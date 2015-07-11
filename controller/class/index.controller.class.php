@@ -4,7 +4,7 @@ class index {
 	public function __construct() {
 	}
 	
-	public function defaultPage() {
+	public function defaultPage($args) {
 		$view = new view("index", "index");
 		$view->assign("meta_title", "Mon titre a moi");
 		$view->assign("meta_description", "Ma description a moi");
@@ -13,7 +13,7 @@ class index {
 		$view->assign("allArticles", $articles);
 	}
 	
-	public function recherche(){
+	public function recherche($args){
 		if (isset($_SESSION['elementsSessionFormulaire']['formulaireRecherche'])){
 		$validation = new validation($_SESSION['elementsSessionFormulaire']['formulaireRecherche']);
 		if ($validation->validationFormulaire()){

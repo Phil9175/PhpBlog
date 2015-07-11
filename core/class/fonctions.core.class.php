@@ -19,5 +19,16 @@ public static function trunque($str, $nb = 150) {
 	return $str;
 }
 
+public static function id_aleatoire()
+	{
+	$elements = "abcdefghijklmnopqrstuvwxyz0123456789AZERTYUIOPMLKJHGFDSQWXCVBN";
+	$retour = "";
+	srand(time());
+	for ($ligne=0;$ligne<30;$ligne++)
+		{
+		$retour.=substr($elements,(rand()%(strlen($elements))),1);
+		}
+	return sha1($retour.uniqid());
+	}
+
 }
-define("ADRESSE_SITE", "http://".$_SERVER['HTTP_HOST']);

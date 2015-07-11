@@ -1,5 +1,7 @@
 <?php
 session_start();
+include("core/class/constantes.core.php");
+
 spl_autoload_register( function($class_name) {
     if (file_exists("controller/class/" . $class_name . ".controller.class.php"))
 	{
@@ -21,13 +23,16 @@ spl_autoload_register( function($class_name) {
 
 $url = explode("/", trim($_SERVER['REQUEST_URI'], "/"));
 $object = ($url[0] == "/" || $url[0] == "")?"index":$url[0];
+unset($url[0]);
 $action = (!isset($url[1]))?"defaultPage":$url[1];
+unset($url[1]);
+$args = array_merge($url, $_POST);
 
 $test = new test;
 if (class_exists($object)){
 	$obj = new $object;
 	if (is_callable([$obj, $action]) && fonctions::is_controller($object)){
-		$obj->$action();
+		$obj->$action($args);
 		}else{
 		unset($obj);
 		$obj = new notFound;
