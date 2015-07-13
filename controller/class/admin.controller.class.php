@@ -56,12 +56,11 @@ class admin {
 						$article->set_idmembre($user->get_id());
 						$article->set_article_url(urlencode(str_replace(" ", "-", $args["titre"])));
 						$article->save("article");
-						$notification = "METTRE UNE NOTIF LA";
 					}else{
+						print_r($validation->getErreur());
 						$view->assign("errors", $validation->getErreur());
 					}
 				}
-						$view->assign("args", $args);
 			$view->assign("meta_title", "Connexion Administration");
 			$view->assign("meta_description", "Connexion administration journal du referencement");			
 				

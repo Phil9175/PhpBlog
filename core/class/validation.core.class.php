@@ -125,7 +125,7 @@ class validation {
 	private function validationChamp($idChamp){
 		$erreur = 0;
 		if ((isset($this->elements[$idChamp]["required"]) && $this->elements[$idChamp]["required"] == "TRUE") && $this->data[$this->elements[$idChamp]["name"]] == ""){
-			array_push($this->tableauErreur, "Le champ ".$this->elements[$idChamp]["title"]." est invalide, il est obligatoire de le completer.");
+			array_push($this->tableauErreur, "Le champ ".$this->elements[$idChamp]["name"]." est invalide, il est obligatoire de le completer.");
 			++$erreur;
 		}
 		if (isset($this->elements[$idChamp]["typeVerification"]) && is_array($this->elements[$idChamp]["typeVerification"])){
@@ -133,37 +133,37 @@ class validation {
 			switch ($cle){
 				case "maxlength":
 					if (strlen($this->data[$this->elements[$idChamp]["name"]]) > $valeur)
-						array_push($this->tableauErreur, "Le champ ".$this->elements[$idChamp]["title"]." est trop long, il doit faire ".$valeur." caracteres de long maximum.");
+						array_push($this->tableauErreur, "Le champ ".$this->elements[$idChamp]["name"]." est trop long, il doit faire ".$valeur." caracteres de long maximum.");
 						++$erreur;
 						break;
 				case "minlength":
 				if (strlen($this->data[$this->elements[$idChamp]["name"]]) < $valeur)
-						array_push($this->tableauErreur, "Le champ ".$this->elements[$idChamp]["title"]." est trop court, il doit faire ".$valeur." caractere de long minimum.");
+						array_push($this->tableauErreur, "Le champ ".$this->elements[$idChamp]["name"]." est trop court, il doit faire ".$valeur." caractere de long minimum.");
 						++$erreur;
 						break;
 				case "email":
 						if ($this->valideEmail($this->data[$this->elements[$idChamp]["name"]]) != TRUE){
-							array_push($this->tableauErreur, "Le champ ".$this->elements[$idChamp]["title"]." est invalide. Veuillez saisir un email valide.");
+							array_push($this->tableauErreur, "Le champ ".$this->elements[$idChamp]["name"]." est invalide. Veuillez saisir un email valide.");
 							++$erreur;
 						}
 						break;
 				case "telephone":
 						if (!preg_match("#^0[1-68]([-. ]?[0-9]{2}){4}$#", $this->data[$this->elements[$idChamp]["name"]])){
-							array_push($this->tableauErreur, "Le champ ".$this->elements[$idChamp]["title"]." est invalide. Veuillez saisir un numero de telephone valide.");
+							array_push($this->tableauErreur, "Le champ ".$this->elements[$idChamp]["name"]." est invalide. Veuillez saisir un numero de telephone valide.");
 							++$erreur;
 						}
 						break;
 				case "date":
 						list($dd, $mm, $yyyy)= explode("/", $this->data[$this->elements[$idChamp]["name"]]);
 						if (!checkdate($mm, $dd, $yyyy)){
-							array_push($this->tableauErreur, "Le champ ".$this->elements[$idChamp]["title"]." est invalide. Veuillez saisir une date valide.");
+							array_push($this->tableauErreur, "Le champ ".$this->elements[$idChamp]["name"]." est invalide. Veuillez saisir une date valide.");
 							++$erreur;
 						}
 						break;
 				case "url":
 						$this->data[$this->elements[$idChamp]["name"]] = trim($this->data[$this->elements[$idChamp]["name"]], '!"#$%&\'()*+,-./@:;<=>[\\]^_`{|}~');
 						if (!preg_match('%^(?:(?:https?|ftp)://)(?:\S+(?::\S*)?@|\d{1,3}(?:\.\d{1,3}){3}|(?:(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)(?:\.(?:[a-z\d\x{00a1}-\x{ffff}]+-?)*[a-z\d\x{00a1}-\x{ffff}]+)*(?:\.[a-z\x{00a1}-\x{ffff}]{2,6}))(?::\d+)?(?:[^\s]*)?$%iu', $this->data[$this->elements[$idChamp]["name"]])){
-								array_push($this->tableauErreur, "Le champ ".$this->elements[$idChamp]["title"]." est invalide. Veuillez saisir une adresse url valide.");
+								array_push($this->tableauErreur, "Le champ ".$this->elements[$idChamp]["name"]." est invalide. Veuillez saisir une adresse url valide.");
 								++$erreur;
 							}
 						break;

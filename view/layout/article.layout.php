@@ -28,16 +28,7 @@
         <div class="grid grid-pad">
           <div class="col-3-3">
             <div class="module">
-              <div id="menu">
-                <ul>
-                  <li><a href="<?php echo ADRESSE_SITE; ?>">Accueil</a>
-                  <li>Item 2
-                  <li>Item 3
-                  <li>Item 4
-                  <li>Item 5
-                  <li>Item 6
-                </ul>
-              </div>
+             <?php include("view/inc/menu.php"); ?>
             </div>
           </div>
         </div>
@@ -61,7 +52,7 @@
                   <h3>1/3</h3>
                   <p><?php 
                   foreach($allArticles as $key => $values): ?>
-                      <a href="<?php echo ADRESSE_SITE."/".$values["article_url"]; ?>" title="<?php echo $values["titre"]; ?>"><?php echo $values["titre"]; ?></a><br>
+                      <a href="<?php echo ADRESSE_SITE."/".$values["article_url"]; ?>" title="<?php echo $values["titre"]; ?>"><?php echo utf8_encode($values["titre"]);; ?></a><br>
                 <?php endforeach; ?></p>
               </div>
             </div>
@@ -86,5 +77,7 @@
             </div>
           </div>
         </div>
+			<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/jquery-1.11.3.min.js"></script> 
+	<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/menu.js"></script>
     </body>
 </html>

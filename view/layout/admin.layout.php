@@ -77,22 +77,14 @@
 	</div>
 	
 	<!-- MENU -->
-	<div class="grid grid-pad">
-		<div class="col-3-3">
-			<div class="module">
-				<div id="menu">
-					<ul>
-						<li><a href="<?php echo ADRESSE_SITE; ?>/admin">Accueil</a>
-						<li><a href="<?php echo ADRESSE_SITE; ?>/admin/article/add">Article</a>
-						<li>Item 3
-						<li>Item 4
-						<li>Item 5
-						<li>Item 6
-					</ul>
-				</div>
-			</div>
-		</div>
-	</div>
+        <div class="grid grid-pad">
+          <div class="col-3-3">
+            <div class="module">
+             <?php include("view/inc/menuadmin.php"); ?>
+            </div>
+          </div>
+        </div>
+		
 	<div class="grid grid-pad"> 
 		<!-- VUE -->
 		<div class="col-3-3">
@@ -208,5 +200,6 @@
 
 
 		</script>
+	<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/menu.js"></script>
 </body>
 </html>

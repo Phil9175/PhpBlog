@@ -6,7 +6,18 @@
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
-
+.blue{
+	color: #2a6496;
+}
+.blue a,h3{
+	color: #2a6496;
+	text-decoration: none;
+	border-bottom: 1px solid #eee;
+	font-size: 30px;
+}
+a{
+	color: #428bca;
+}
 .grid {
   background: white;
   margin: 0 0 20px 0;
@@ -79,7 +90,15 @@
 .module {
   padding: 20px;
   background: #eee;
+  border-radius: 20px;
 }
+
+.moduleCenter {
+  padding: 20px;
+  background: #FFFFFF;
+  border-radius: 20px;
+}
+
 #menu li{
 	display: inline-block;
 	list-style: none;
@@ -123,6 +142,7 @@ h1 em {
   -webkit-box-sizing: border-box;
   -moz-box-sizing: border-box;
   box-sizing: border-box;
+  border-radius: 20px;
 }
 #cssmenu:after,
 #cssmenu > ul:after {
