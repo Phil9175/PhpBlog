@@ -1,17 +1,17 @@
 <?php
 class article extends bdd{
 	
-	private $id;
-	private $titre;
-	private $contenu;
-	private $statut;
-	private $meta_title;
-	private $meta_description;
-	private $date_publication;
-	private $date_last_modification;
-	private $type_page;
-	private $idmembre;
-	private $article_url;
+	protected $id;
+	protected $titre;
+	protected $contenu;
+	protected $statut;
+	protected $meta_title;
+	protected $meta_description;
+	protected $date_publication;
+	protected $date_last_modification;
+	protected $type_page;
+	protected $idmembre;
+	protected $article_url;
 	
 	public function __construct(){
 		parent::__construct();

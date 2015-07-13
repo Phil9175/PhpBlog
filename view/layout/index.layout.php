@@ -2,13 +2,13 @@
     <html>
         <head>
             <meta charset="UTF-8">
-            <link href="<?php $_SERVER['HTTP_HOST']; ?>/view/css/style.css" rel="stylesheet" type="text/css">
+            <link href="<?php echo ADRESSE_SITE; ?>/view/css/style.css" rel="stylesheet" type="text/css">
             <title>Document sans nom</title>
         </head>
     <body>
     	<!-- HEADER -->
         <div class="grid grid-pad">
-          <div class="col-2-8"> <a href="<?php echo ADRESSE_SITE; ?>"><img src="<?php $_SERVER['HTTP_HOST']; ?>/images/JDR.png" height="40px"></a><br>
+          <div class="col-2-8"> <a href="<?php echo ADRESSE_SITE; ?>"><img src="<?php echo ADRESSE_SITE; ?>/images/JDR.png" height="40px"></a><br>
             <em>Journal du Référencement</em> </div>
           <div class="col-4-8"> Bienvenue sur le Journal Du Référencement<br>
             Veille technologique sur le referencement, nous vous montrerons les techniques de<br>
@@ -27,16 +27,29 @@
         <div class="grid grid-pad">
           <div class="col-3-3">
             <div class="module">
-              <div id="menu">
-                <ul>
-                  <li><a href="<?php echo ADRESSE_SITE; ?>">Accueil</a>
-                  <li>Item 2
-                  <li>Item 3
-                  <li>Item 4
-                  <li>Item 5
-                  <li>Item 6
-                </ul>
-              </div>
+             <div id='cssmenu'>
+				<ul>
+				   <li><a href="<?php echo ADRESSE_SITE; ?>">Accueil</a></li>
+				   <li class='active has-sub'><a href='#'>Products</a>
+					  <ul>
+						 <li class='has-sub'><a href='#'>Product 1</a>
+							<ul>
+							   <li><a href='#'>Sub Product</a></li>
+							   <li><a href='#'>Sub Product</a></li>
+							</ul>
+						 </li>
+						 <li class='has-sub'><a href='#'>Product 2</a>
+							<ul>
+							   <li><a href='#'>Sub Product</a></li>
+							   <li><a href='#'>Sub Product</a></li>
+							</ul>
+						 </li>
+					  </ul>
+				   </li>
+				   <li><a href='#'>About</a></li>
+				   <li><a href='#'>Contact</a></li>
+				</ul>
+			</div>
             </div>
           </div>
         </div>
@@ -85,5 +98,7 @@
             </div>
           </div>
         </div>
+	<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/jquery-1.11.3.min.js"></script> 
+	<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/menu.js"></script>
     </body>
 </html>

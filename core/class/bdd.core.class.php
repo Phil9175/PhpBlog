@@ -39,7 +39,7 @@ class bdd {
 			$query = $this->connexion->prepare($sql);
 			$query->execute($array_to_execute);
 		}else{
-			$sql = "INSERT INTO ".$this->table."
+			$sql = "INSERT INTO ".$table."
 					( ". implode(",", $child_vars). ") 
 					VALUES ( :" . implode(",:", $child_vars). ");";
 			$query = $this->connexion->prepare($sql);

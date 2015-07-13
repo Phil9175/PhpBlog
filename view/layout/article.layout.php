@@ -2,14 +2,14 @@
     <html>
         <head>
             <meta charset="UTF-8">
-            <link href="<?php $_SERVER['HTTP_HOST']; ?>/view/css/style.css" rel="stylesheet" type="text/css">
+            <link href="<?php echo ADRESSE_SITE; ?>/view/css/style.css" rel="stylesheet" type="text/css">
             <title><?php echo $meta_title; ?></title>
             <meta name="description" content="<?php echo $meta_description; ?>" />
         </head>
     <body>
     	<!-- HEADER -->
         <div class="grid grid-pad">
-          <div class="col-2-8"> <a href="<?php echo ADRESSE_SITE; ?>"><img src="<?php $_SERVER['HTTP_HOST']; ?>/images/JDR.png" height="40px"></a><br>
+          <div class="col-2-8"> <a href="<?php echo ADRESSE_SITE; ?>"><img src="<?php echo ADRESSE_SITE; ?>/images/JDR.png" height="40px"></a><br>
             <em>Journal du Référencement</em> </div>
           <div class="col-4-8"> Bienvenue sur le Journal Du Référencement<br>
             Veille technologique sur le referencement, nous vous montrerons les techniques de<br>
@@ -87,16 +87,4 @@
           </div>
         </div>
     </body>
-	<script type="text/javascript">
-	function getSelectionText() {
-    var text = "";
-    if (window.getSelection) {
-        text = window.getSelection().toString();
-    } else if (document.selection && document.selection.type != "Control") {
-        text = document.selection.createRange().text;
-    }
-    return text;
-	}
-	
-	</script>
 </html>
