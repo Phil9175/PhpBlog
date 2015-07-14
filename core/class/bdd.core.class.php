@@ -71,5 +71,12 @@ class bdd {
 		$query->setFetchMode(PDO::FETCH_ASSOC);
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
+	
+	public function requete($requete){
+		$query = $this->connexion->prepare($requete);
+		$query->execute();
+		$query->setFetchMode(PDO::FETCH_ASSOC);
+		return $query->fetchAll(PDO::FETCH_ASSOC);
+	}
 }
 ?>

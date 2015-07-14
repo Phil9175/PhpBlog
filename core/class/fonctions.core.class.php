@@ -31,7 +31,7 @@ public static function id_aleatoire()
 	return sha1($retour.uniqid());
 	}
 
-public static function pagination($current_page, $nb_pages, $link='?page=%d', $around=3, $firstlast=1)
+public static function pagination($current_page, $nb_pages, $link='/index/page/%d', $around=3, $firstlast=1)
 {
 	$pagination = '';
 	$link = preg_replace('`%([^d])`', '%%$1', $link);
