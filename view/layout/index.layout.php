@@ -51,7 +51,7 @@
                   <h3>1/3</h3>
                   <p><?php 
                   foreach($allArticles as $key => $values): ?>
-                      <a href="<?php echo ADRESSE_SITE."/".$values["article_url"]; ?>" title="<?php echo $values["titre"]; ?>"><?php echo utf8_encode($values["titre"]);; ?></a><br>
+                      <a href="<?php echo ADRESSE_SITE."/".$values["article_url"]; ?>" title="<?php echo $values["titre"]; ?>"><?php echo $values["titre"]; ?></a><br>
                 <?php endforeach; ?></p>
               </div>
             </div>
