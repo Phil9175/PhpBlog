@@ -1,6 +1,43 @@
 <?php
 class index {
+	/*
 	
+	 <?php
+	  // Numero de page (1 par défaut)
+if( isset($_GET['page']) && is_numeric($_GET['page']) )
+    $page = $_GET['page'];
+else
+    $page = 1;
+
+
+// Nombre d'infos par page
+$pagination = 50;
+// Numéro du 1er enregistrement à lire
+$limit_start = ($page - 1) * $pagination;
+        $query = "Select * from a_macartegrise_partenaires order by dep ASC LIMIT $limit_start, $pagination";
+		
+		
+		
+		
+		EROUGHERIUTGHIPTGHIPRTUGpages
+		 <div class="pagination">
+        <?php
+        // Nb d'enregistrement total
+$nb_total = mysql_query("SELECT COUNT(*) AS nb_total FROM a_macartegrise_partenaires");
+$nb_total = mysql_fetch_array($nb_total);
+$nb_total = $nb_total['nb_total'];
+
+// Pagination
+$nb_pages = ceil($nb_total / $pagination);
+ echo '<center>';
+echo '<p class="pagination">' . pagination($page, $nb_pages) . '</p>';
+ 
+echo "</center>";
+		?></div> 
+		
+		*/
+		
+		
 	public function __construct() {
 	}
 	
