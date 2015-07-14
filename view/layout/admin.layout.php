@@ -71,8 +71,8 @@
 		<div class="col-2-8"> <a href="<?php echo ADRESSE_SITE; ?>"><img src="<?php echo ADRESSE_SITE; ?>/images/JDR.png" height="40px"></a><br>
 			<em>Journal du Référencement</em> </div>
 		<div class="col-4-8"> Bienvenue sur le Journal Du Référencement<br>
-			Veille technologique sur le referencement, nous vous montrerons les techniques de<br>
-			referencement. </div>
+            Content is king, link is his queen.</div>
+
 		<div class="col-2-8"> <a href="<?php echo ADRESSE_SITE."/admin/disconnect"; ?>">Deconnexion</a> </div>
 	</div>
 	

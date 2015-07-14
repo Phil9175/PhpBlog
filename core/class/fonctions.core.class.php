@@ -9,7 +9,7 @@ public static function is_controller($class_name){
 		return FALSE;
 	}
 }
-public static function trunque($str, $nb = 150) {
+public static function trunque($str, $nb = 300) {
 	if (strlen($str) > $nb) {
 		$str = substr($str, 0, $nb);
 		$position_espace = strrpos($str, " ");

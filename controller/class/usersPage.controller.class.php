@@ -1,5 +1,5 @@
 <?php
-class page {
+class usersPage {
 	
 	private $url;
 	
@@ -9,7 +9,7 @@ class page {
 		$article->getOneBy($this->url[0], "article_url", "article");
 		$article->setFromBdd($article->result);
 		$articles = $article->getResults("","","article", "ORDER BY id");
-		$view = new view("article", "index", $article->get_type_page());
+		$view = new view("article", "index", "usersPage.layout");
 		$view->assign("allArticles", $articles);
 		$view->assign("titre", $article->get_titre());
 		$view->assign("contenu", $article->get_contenu());
