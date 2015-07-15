@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <link href="<?php echo ADRESSE_SITE; ?>/view/css/style.css" rel="stylesheet" type="text/css">
-<title>Document sans nom</title>
+<title><?php echo $meta_title; ?></title>
+<meta name="description" content="<?php echo $meta_description; ?>">
 </head>
 <body>
 	<!-- HEADER -->
