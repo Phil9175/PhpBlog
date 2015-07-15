@@ -86,5 +86,39 @@ public static function pagination($current_page, $nb_pages, $link='/index/page/%
 	return $pagination;
 }
 
+	public static function ariane(){
+		$separator = " / ";
+		$args = explode("/", trim($_SERVER['REQUEST_URI'], "/"));
 
+		if ($_SERVER['REQUEST_URI'] == "/"){
+			return "<a class=\"actual\" href=\"".ADRESSE_SITE."\">Accueil</a>";	
+		}
+		
+		if (!self::is_controller($args[0])){
+			$test = new test();
+			if ($test->testArticle()){
+				$test->setFromBdd($test->result);
+				return "<a class=\"notactive\" href=\"".ADRESSE_SITE."\">Accueil</a> / <span class=\"actual\">".$test->get_titre()."</span>";	
+			}
+		}
+		
+		if (self::is_controller($args[0])){
+			if ($args[0] == "profil"){
+				if ($args[1] == "view" && is_numeric($args[2])){
+					$user = new users;
+      				$user->getOneBy($args[2], "id", "users");
+       				$user->setFromBdd($user->result);
+					return "<a class=\"notactive\" href=\"".ADRESSE_SITE."\">Accueil</a> / <span class=\"actual\">Profil utilisateur ".$user->get_pseudo()."</span>";	
+				}elseif ($args[1] == "articles" && is_numeric($args[2])){
+					$user = new users;
+      				$user->getOneBy($args[2], "id", "users");
+       				$user->setFromBdd($user->result);
+					return "<a class=\"notactive\" href=\"".ADRESSE_SITE."\">Accueil</a> / <a class=\"notactive\" href=\"".ADRESSE_SITE."/profil/view/".$user->get_id()."\" >Profil utilisateur ".$user->get_pseudo()."</a> / <span class=\"actual\">Articles publiés par ".$user->get_pseudo()."</span>";	
+				}
+			}
+			
+				return "<a class=\"notactive\" href=\"".ADRESSE_SITE."\">Accueil</a> / <span class=\"actual\">".$test->get_titre()."</span>";	
+		}
+		
+	}
 }

@@ -4,65 +4,71 @@
 <meta charset="UTF-8">
 <link href="<?php echo ADRESSE_SITE; ?>/view/css/style.css" rel="stylesheet" type="text/css">
 <style type="text/css">
-#stylingText{
-	list-style-type:none;
+#stylingText {
+	list-style-type: none;
 	padding-left: 2px;
 }
-#stylingText li{
+#stylingText li {
 	display: inline-block;
 	list-style: none;
 }
-.gras{
-	background:url(<?php echo ADRESSE_SITE; ?>/view/images/wysiwyg/gras.png) no-repeat;
-	background-size:24px 24px;
-	width:30px;
-	height:30px;
+.gras {
+ background:url(<?php echo ADRESSE_SITE;
+?>/view/images/wysiwyg/gras.png) no-repeat;
+	background-size: 24px 24px;
+	width: 30px;
+	height: 30px;
 }
-.souligne{
-	background:url(<?php echo ADRESSE_SITE; ?>/view/images/wysiwyg/souligne.png) no-repeat;
-	background-size:24px 24px;
-	width:30px;
-	height:30px;
+.souligne {
+ background:url(<?php echo ADRESSE_SITE;
+?>/view/images/wysiwyg/souligne.png) no-repeat;
+	background-size: 24px 24px;
+	width: 30px;
+	height: 30px;
 }
-.italique{
-	background:url(<?php echo ADRESSE_SITE; ?>/view/images/wysiwyg/italique.png) no-repeat;
-	background-size:24px 24px;
-	width:30px;
-	height:30px;
+.italique {
+ background:url(<?php echo ADRESSE_SITE;
+?>/view/images/wysiwyg/italique.png) no-repeat;
+	background-size: 24px 24px;
+	width: 30px;
+	height: 30px;
 }
-.barre{
-	background:url(<?php echo ADRESSE_SITE; ?>/view/images/wysiwyg/barre.png) no-repeat;
-	background-size:24px 24px;
-	width:30px;
-	height:30px;
+.barre {
+ background:url(<?php echo ADRESSE_SITE;
+?>/view/images/wysiwyg/barre.png) no-repeat;
+	background-size: 24px 24px;
+	width: 30px;
+	height: 30px;
 }
-.alignLeft{
-	background:url(<?php echo ADRESSE_SITE; ?>/view/images/wysiwyg/align-gauche.png) no-repeat;
-	background-size:24px 24px;
-	width:30px;
-	height:30px;
+.alignLeft {
+ background:url(<?php echo ADRESSE_SITE;
+?>/view/images/wysiwyg/align-gauche.png) no-repeat;
+	background-size: 24px 24px;
+	width: 30px;
+	height: 30px;
 }
-.alignRight{
-	background:url(<?php echo ADRESSE_SITE; ?>/view/images/wysiwyg/align-droite.png) no-repeat;
-	background-size:24px 24px;
-	width:30px;
-	height:30px;
+.alignRight {
+ background:url(<?php echo ADRESSE_SITE;
+?>/view/images/wysiwyg/align-droite.png) no-repeat;
+	background-size: 24px 24px;
+	width: 30px;
+	height: 30px;
 }
-.alignCenter{
-	background:url(<?php echo ADRESSE_SITE; ?>/view/images/wysiwyg/align-centre.png) no-repeat;
-	background-size:24px 24px;
-	width:30px;
-	height:30px;
+.alignCenter {
+ background:url(<?php echo ADRESSE_SITE;
+?>/view/images/wysiwyg/align-centre.png) no-repeat;
+	background-size: 24px 24px;
+	width: 30px;
+	height: 30px;
 }
-.alignJustify{
-	background:url(<?php echo ADRESSE_SITE; ?>/view/images/wysiwyg/align-justifie.png) no-repeat;
-	background-size:24px 24px;
-	width:30px;
-	height:30px;
+.alignJustify {
+ background:url(<?php echo ADRESSE_SITE;
+?>/view/images/wysiwyg/align-justifie.png) no-repeat;
+	background-size: 24px 24px;
+	width: 30px;
+	height: 30px;
 }
-
 </style>
-
 <title>Document sans nom</title>
 </head>
 <body>
@@ -71,20 +77,18 @@
 		<div class="col-2-8"> <a href="<?php echo ADRESSE_SITE; ?>"><img src="<?php echo ADRESSE_SITE; ?>/images/JDR.png" height="40px"></a><br>
 			<em>Journal du Référencement</em> </div>
 		<div class="col-4-8"> Bienvenue sur le Journal Du Référencement<br>
-            Content is king, link is his queen.</div>
-
+			Content is king, link is his queen.</div>
 		<div class="col-2-8"> <a href="<?php echo ADRESSE_SITE."/admin/disconnect"; ?>">Deconnexion</a> </div>
 	</div>
 	
 	<!-- MENU -->
-        <div class="grid grid-pad">
-          <div class="col-3-3">
-            <div class="module">
-             <?php include("view/inc/menuadmin.php"); ?>
-            </div>
-          </div>
-        </div>
-		
+	<div class="grid grid-pad">
+		<div class="col-3-3">
+			<div class="module">
+				<?php include("view/inc/menuadmin.php"); ?>
+			</div>
+		</div>
+	</div>
 	<div class="grid grid-pad"> 
 		<!-- VUE -->
 		<div class="col-3-3">
@@ -112,7 +116,7 @@
 		</div>
 	</div>
 	<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/jquery-1.11.3.min.js"></script> 
-	<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/script.js"></script>
+	<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/script.js"></script> 
 	<script type="text/javascript">
 	function gras(){
 		var texte = window.getSelection().toString();
@@ -199,7 +203,7 @@
 
 
 
-		</script>
+		</script> 
 	<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/menu.js"></script>
 </body>
 </html>

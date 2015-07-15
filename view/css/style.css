@@ -12,6 +12,16 @@
 	font-style:italic;
 	color:#B0B0B0;
 }
+.actual{
+	color:#2a6496;
+	text-decoration:none;
+	font-style:italic;
+}
+.notactive{
+	color:#4F4F4F;
+	text-decoration:none;
+	font-style:italic;
+}
 .blue{
 	color: #2a6496;
 }
