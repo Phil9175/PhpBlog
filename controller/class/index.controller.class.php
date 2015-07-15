@@ -15,11 +15,11 @@ class index {
 		$view->assign("meta_title", "Mon titre a moi");
 		$view->assign("meta_description", "Ma description a moi");
 		$article = new article;
-		$articles = $article->getResults("","","article", "ORDER BY id ASC LIMIT $limit_start, $pagination");
+		$articles = $article->getResults("","","article", " WHERE statut = 'published' ORDER BY id ASC LIMIT $limit_start, $pagination");
 		$view->assign("allArticles", $articles);
 		
 		$requete = new bdd;
-		$nb_total = $requete->requete("SELECT COUNT(*) AS nb_total FROM article");
+		$nb_total = $requete->requete("SELECT COUNT(*) AS nb_total FROM article  WHERE statut = 'published' ");
 		$nb_total = $nb_total[0]['nb_total'];
 		// Pagination
 		$nb_pages = ceil($nb_total / $pagination);
@@ -44,11 +44,11 @@ class index {
 		$view->assign("meta_title", "Mon titre a moi");
 		$view->assign("meta_description", "Ma description a moi");
 		$article = new article;
-		$articles = $article->getResults("","","article", "ORDER BY id ASC LIMIT $limit_start, $pagination");
+		$articles = $article->getResults("","","article", " WHERE statut = 'published' ORDER BY id ASC LIMIT $limit_start, $pagination");
 		$view->assign("allArticles", $articles);
 		
 		$requete = new bdd;
-		$nb_total = $requete->requete("SELECT COUNT(*) AS nb_total FROM article");
+		$nb_total = $requete->requete("SELECT COUNT(*) AS nb_total FROM article WHERE statut = 'published' ");
 		$nb_total = $nb_total[0]['nb_total'];
 		// Pagination
 		$nb_pages = ceil($nb_total / $pagination);

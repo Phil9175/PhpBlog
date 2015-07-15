@@ -39,7 +39,7 @@ class security{
 		error_reporting(0);
 		session_unset();
 		session_destroy();
-		header('Location: '.$_SERVER['HTTP_HOST']."/");
+		header('Location: '.$_SERVER['HTTP_HOST'].'/');
 	}
 	
 	public static function has_permission(){

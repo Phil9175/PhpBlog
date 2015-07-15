@@ -61,6 +61,7 @@ class admin
                         $article->set_type_page("article.layout");
                         $article->set_idmembre($user->get_id());
                         $article->set_article_url(urlencode(str_replace(" ", "-", $args["titre"])));
+                        $article->set_tags($args["titre"]);
                         $article->save("article");
                     } else {
                         print_r($validation->getErreur());
@@ -92,21 +93,18 @@ class admin
                         $user = new users();
                         $user->getOneBy($_SESSION['session'], "token", "users");
                         $user->setFromBdd($user->result);
-						$oldArticle = new article;
-						$oldArticle->getOneBy($args[1], "id", "article", "ORDER BY id");
-                   		$oldArticle->setFromBdd($oldArticle->result);
-					
-                        $article = new article;
-                        $article->set_id($args[1]);
+						
+						$article = new article;
+						$article->getOneBy($args[1], "id", "article", "ORDER BY id");
+                   		$article->setFromBdd($article->result);
                         $article->set_titre(validation::sanitize($args["titre"]));
                         $article->set_contenu(nl2br($args["contenu"]));
                         $article->set_statut("published");
                         $article->set_meta_title("");
                         $article->set_meta_description("");
-						$article->set_date_publication($oldArticle->get_date_publication());
                         $article->set_date_last_modification(date("Y-m-d H:i:s"));
                         $article->set_type_page("article.layout");
-                        $article->set_idmembre($user->get_id());
+                        $article->set_tags("test");
                         $article->set_article_url(urlencode(validation::sanitize(str_replace(" ", "-", str_replace("'", "-", $args["titre"])))));
                         $article->save("article");
                     } else {
@@ -150,4 +148,27 @@ class admin
         security::disconnect();
     }
     
+	public function unpublished($args){
+		if (security::is_connected() === TRUE) {
+			$article = new article("article");
+			$article->getOneBy($args[0], "id", "article");
+			$article->setFromBdd($article->result);
+			$article->set_statut("unpublished");
+			$article->save("article");
+			header('Location: /admin/article/list');
+		}
+	}
+	
+	public function published($args){
+		if (security::is_connected() === TRUE) {
+			$article = new article("article");
+			$article->getOneBy($args[0], "id", "article");
+			$article->setFromBdd($article->result);
+			$article->set_statut("published");
+			$article->save("article");
+			header('Location: /admin/article/list');
+		}
+	}
+	
+	
 }

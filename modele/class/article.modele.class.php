@@ -12,6 +12,7 @@ class article extends bdd{
 	protected $type_page;
 	protected $idmembre;
 	protected $article_url;
+	protected $tags;
 	
 	public function __construct(){
 		parent::__construct();
@@ -67,6 +68,10 @@ class article extends bdd{
 		$this->article_url = $article_url;
 	}
 	
+	public function set_tags($tags){
+		$this->tags = $tags;
+	}
+	
 	public function get_id(){
 		return $this->id;
 	}
@@ -111,9 +116,9 @@ class article extends bdd{
 		return $this->article_url;
 	}
 	
-	
-	
-	
+	public function get_tags(){
+		return $this->tags;
+	}
 	
 }
 ?>

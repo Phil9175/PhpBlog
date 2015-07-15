@@ -14,7 +14,7 @@ class profil {
 		$view->assign("email", $user->get_email());
 		$view->assign("dateInscription", date('d/m/Y H:i:s', strtotime($user->get_date_Inscription())));
 		$article = new article;
-		$articles = $article->getResults("","","article", "ORDER BY id");
+		$articles = $article->getResults("","","article", " WHERE statut = 'published' ORDER BY id");
 		$view->assign("allArticles", $articles);
 	}
 	
@@ -27,7 +27,7 @@ class profil {
 		$view->assign("nom", $user->get_pseudo());
 		$view->assign("idUser", $user->get_id());
 		$article = new article;
-		$articles = $article->getResults("","","article", "ORDER BY id");
+		$articles = $article->getResults("","","article", " WHERE statut = 'published' ORDER BY id");
 		$view->assign("allArticles", $articles);
 		unset($article);
 		
@@ -42,7 +42,7 @@ class profil {
 			
 			
 		$article = new article;
-		$articles = $article->getResults("","","article", " where idmembre = '".$user->get_id()."' ORDER BY id ASC LIMIT $limit_start, $pagination");
+		$articles = $article->getResults("","","article", " where idmembre = '".$user->get_id()."' and statut = 'published' ORDER BY id ASC LIMIT $limit_start, $pagination");
 		$view->assign("allUserArticles", $articles);
 
 		$requete = new bdd;

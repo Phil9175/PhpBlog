@@ -8,7 +8,7 @@ class page {
 		$article = new article("article");
 		$article->getOneBy($this->url[0], "article_url", "article");
 		$article->setFromBdd($article->result);
-		$articles = $article->getResults("","","article", "ORDER BY id");
+		$articles = $article->getResults("","","article", " WHERE statut = 'published' ORDER BY id");
 		$view = new view("article", "index", $article->get_type_page());
 		$view->assign("allArticles", $articles);
 		$view->assign("titre", $article->get_titre());

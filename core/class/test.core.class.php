@@ -12,7 +12,7 @@ class test extends bdd{
 	protected $type_page;
 	protected $idmembre;
 	protected $article_url;
-	
+	protected $tags;
 	
 	
 	public function __construct() {
