@@ -54,8 +54,8 @@ class admin
                         $article->set_titre($args["titre"]);
                         $article->set_contenu(nl2br($args["contenu"]));
                         $article->set_statut("published");
-                        $article->set_meta_title("");
-                        $article->set_meta_description("");
+                        $article->set_meta_title($args["meta_title"]);
+                        $article->set_meta_description($args["meta_description"]);
                         $article->set_date_publication(date("Y-m-d H:i:s"));
                         $article->set_date_last_modification(date("Y-m-d H:i:s"));
                         $article->set_type_page("article.layout");

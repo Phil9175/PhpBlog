@@ -33,9 +33,10 @@
 			</div>
 		</div>
 	</div>
-	<link href="<?php echo ADRESSE_SITE; ?>/view/css/admin.css" rel="stylesheet" type="text/css">
 	<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/jquery-1.11.3.min.js"></script> 
 	<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/script.js"></script> 
 	<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/menu.js"></script>
+	<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/ckeditor/ckeditor.js"></script>
+
 </body>
 </html>

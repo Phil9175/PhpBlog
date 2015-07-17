@@ -25,6 +25,7 @@ class security{
 		if ($utilisateur->get_password() == self::makePassword($elements["pass"])){
 			$uniqid = fonctions::id_aleatoire();
 			$_SESSION['session'] = $uniqid;
+			$_SESSION['nomUtilisateur'] = $utilisateur->get_pseudo();
 			$utilisateur->set_token($uniqid);
 			$utilisateur->save("users");
 			header("Location: ".ADRESSE_SITE."/admin");

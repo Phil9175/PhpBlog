@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <link href="<?php echo ADRESSE_SITE; ?>/view/css/style.css" rel="stylesheet" type="text/css">
+<link href="<?php echo ADRESSE_SITE; ?>/view/css/font-awesome.min.css" rel="stylesheet" type="text/css">
 <title><?php echo $meta_title; ?></title>
 <meta name="description" content="<?php echo $meta_description; ?>">
 </head>
@@ -16,11 +17,8 @@
 		<div class="col-2-8">
 			<?php
 	  if (security::is_connected() === TRUE) {
-		  $user = new users();
-          $user->getOneBy($_SESSION['session'], "token", "users");
-          $user->setFromBdd($user->result);
 ?>
-			Bienvenue <?php echo $user->get_pseudo(); ?><a href="<?php echo ADRESSE_SITE."/admin/"; ?>"><img src="<?php echo ADRESSE_SITE; ?>/view/images/icone-accueil.png" width="40px" ></a> <a href="<?php echo ADRESSE_SITE."/admin/disconnect"; ?>"><img src="<?php echo ADRESSE_SITE; ?>/view/images/icone-logout.png" width="40px" ></a>
+			Bienvenue <?php echo $_SESSION['nomUtilisateur']; ?><a class="fa fa-home fa-3x noDecoration black" href="<?php echo ADRESSE_SITE."/admin/"; ?>"></a> <a href="<?php echo ADRESSE_SITE."/admin/disconnect"; ?>"><img src="<?php echo ADRESSE_SITE; ?>/view/images/icone-logout.png" width="40px" ></a>
 			<?php
 	  }else{
         $formulaire = new formulaire("identificationAdmin", "", "POST", "/admin/auth", "");

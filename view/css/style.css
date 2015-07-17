@@ -18,6 +18,9 @@
 	text-decoration:none;
 	font-style:italic;
 }
+.noDecoration{
+	text-decoration:none;
+}
 .notactive{
 	color:#4F4F4F;
 	text-decoration:none;
@@ -25,6 +28,15 @@
 }
 .blue{
 	color: #2a6496;
+}
+.green {
+	color: #239837;
+}
+.black {
+	color:#3E3C3C;
+}
+.red {
+	color:#B80003;
 }
 .blue a,h3{
 	color: #2a6496;
