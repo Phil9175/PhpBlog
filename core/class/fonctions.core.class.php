@@ -121,4 +121,17 @@ public static function pagination($current_page, $nb_pages, $link='/index/page/%
 		}
 		
 	}
+	
+	public static function format($chaine, $tag, $replace) {
+	  $sep = '';
+	  $res = '';
+	  $tab = explode($tag, $chaine);
+	  foreach ($tab as $item) {
+		if (strlen($item) > 0) {
+		  $res.= $sep.$item;
+		  $replace = '';
+		}
+	  }
+	  return $res;
+	}
 }

@@ -18,7 +18,7 @@
 			<?php
 	  if (security::is_connected() === TRUE) {
 ?>
-			Bienvenue <?php echo $_SESSION['nomUtilisateur']; ?><a class="fa fa-home fa-3x noDecoration black" href="<?php echo ADRESSE_SITE."/admin/"; ?>"></a> <a href="<?php echo ADRESSE_SITE."/admin/disconnect"; ?>"><img src="<?php echo ADRESSE_SITE; ?>/view/images/icone-logout.png" width="40px" ></a>
+			Bienvenue <?php echo $_SESSION['nomUtilisateur']; ?><a class="fa fa-home fa-3x noDecoration black" href="<?php echo ADRESSE_SITE."/admin/"; ?>"></a> <a class="fa fa-sign-out fa-3x noDecoration black" href="<?php echo ADRESSE_SITE."/admin/disconnect"; ?>"></a>
 			<?php
 	  }else{
         $formulaire = new formulaire("identificationAdmin", "", "POST", "/admin/auth", "");

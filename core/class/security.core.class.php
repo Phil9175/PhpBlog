@@ -15,6 +15,16 @@ class security{
 		}
 	}
 	
+	public static function returnId(){
+		if (self::is_connected()){
+			$utilisateur = new users;
+			$utilisateur->getOneBy($_SESSION["session"], "token", "users");
+			return $utilisateur->result["id"];
+		}else{
+			return FALSE;
+		}
+	}
+	
 	public static function connected($elements){
 		//Création d'une variable de session
 		//redirection
@@ -43,8 +53,48 @@ class security{
 		header('Location: '.$_SERVER['HTTP_HOST'].'/');
 	}
 	
-	public static function has_permission(){
+	public static function get_can_modify_categories($id){
+			$utilisateur = new users;
+			$utilisateur->getOneBy($id, "id", "users");
+            $utilisateur->setFromBdd($utilisateur->result);
+			if ($utilisateur->get_can_modify_categories() == 1){
+				return TRUE;
+			}else{
+				return FALSE;	
+			}
+	}
 	
+	public static function get_can_modify_user($id){
+		$utilisateur = new users;
+			$utilisateur->getOneBy($id, "id", "users");
+            $utilisateur->setFromBdd($utilisateur->result);
+			if ($utilisateur->get_can_modify_user() == 1){
+				return TRUE;
+			}else{
+				return FALSE;	
+			}
+	}
+	
+	public static function get_can_modify_page($id){
+		$utilisateur = new users;
+			$utilisateur->getOneBy($id, "id", "users");
+            $utilisateur->setFromBdd($utilisateur->result);
+			if ($utilisateur->get_can_modify_page() == 1){
+				return TRUE;
+			}else{
+				return FALSE;	
+			}
+	}
+	
+	public static function get_can_modify_commentaire($id){
+		$utilisateur = new users;
+			$utilisateur->getOneBy($id, "id", "users");
+            $utilisateur->setFromBdd($utilisateur->result);
+			if ($utilisateur->get_can_modify_commentaire() == 1){
+				return TRUE;
+			}else{
+				return FALSE;	
+			}
 	}
 	
 	public static function makePassword($pass){

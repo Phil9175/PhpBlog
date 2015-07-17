@@ -8,6 +8,9 @@
   -webkit-box-sizing: border-box;
   box-sizing: border-box;
 }
+p:empty {
+  display:none;
+}
 .authorinfos{
 	margin-top:-20px;
 	font-style:italic;
@@ -38,7 +41,7 @@
 .red {
 	color:#B80003;
 }
-.blue a,h3{
+.blue a,h1{
 	color: #2a6496;
 	text-decoration: none;
 	border-bottom: 1px solid #eee;

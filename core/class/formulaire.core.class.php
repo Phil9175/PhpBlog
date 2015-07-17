@@ -24,9 +24,10 @@ class formulaire {
 		$this->nbElementsSessionFormulaire++;
 	}
 	
-	public function ajoutElement($title, $type, $id, $class, $name, $required = FALSE, $value = "", $label_class = "", $typeVerification = "", $rows, $cols){
+	public function ajoutElement($title, $type, $id, $class, $name, $required = FALSE, $value = "", $label_class = "", $typeVerification = ["" => ""], $rows, $cols){
 		$label_class = ($label_class != "")?" class=\"".$label_class."\"":"";
-		$value = ($value != "")?" value=\"".$value."\"":"";
+		$value = ($value != "" && $type != "textarea")?" value=\"".$value."\"":$value;
+		$rows = ($rows != "" && $type != "textarea")?" size=\"".$rows."\"":" rows=\"".$rows."\"";
 		$requiredText = ($required == TRUE)?" required=\"required\"":"";
 
 		switch ($type){
@@ -48,9 +49,9 @@ class formulaire {
 		}
 		
 		if ($type == "textarea"){
-		$this->elementsFormulaire[$this->nbElements] = $label."<textarea id=\"".$id."\" class=\"".$class."\" name=\"".$name."\"".$value."".$requiredText." cols=\"".$cols."\" rows=\"".$rows."\"></textarea>";
+		$this->elementsFormulaire[$this->nbElements] = $label."<textarea id=\"".$id."\" class=\"".$class."\" name=\"".$name."\"".$requiredText." cols=\"".$cols."\" ".$rows.">".$value."</textarea>";
 		}else{
-		$this->elementsFormulaire[$this->nbElements] = $label."<input type=\"".$type."\" id=\"".$id."\" class=\"".$class."\" name=\"".$name."\"".$value."".$requiredText.">";
+		$this->elementsFormulaire[$this->nbElements] = $label."<input type=\"".$type."\" id=\"".$id."\" class=\"".$class."\" name=\"".$name."\"".$rows."".$value."".$requiredText.">";
 		}
 		++$this->nbElements;
 		$this->elementsSessionFormulaire[$this->nbElementsSessionFormulaire] = ["title" => $title,"type" => $type, "name" => $name, "required" => $required, "typeVerification" => $typeVerification];
