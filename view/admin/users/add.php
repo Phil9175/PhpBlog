@@ -1,7 +1,6 @@
 
-    <div class="module">
-      <h3>Se connecter</h3>
-      <ul>
+	<div class="moduleCenter">
+	 <ul>
       <?php if (isset($_POST['isSubmit'])):
 	  				if (isset($errors)):
 		  			foreach($errors as $key => $values):
@@ -13,16 +12,13 @@
 			endif;
 			?>
       </ul>
-      <?php
-	  if (security::is_connected() === TRUE) {
-		  
-	  }else{
-        $formulaire = new formulaire("identificationAdmin", "", "POST", "/admin/auth", "");
+	<?php
+	 	$formulaire = new formulaire("addUser", "", "POST", "/admin/users/add", "");
         $formulaire->ajoutElement("Email", "text", "email", "", "email", "TRUE", "", "", ["email" => ""], "", "");
+        $formulaire->ajoutElement("Pseudo", "text", "pseudo", "", "pseudo", "TRUE", "", "", "", "", "");
 		$formulaire->ajoutElement("Mot de passe", "password", "pass", "", "pass", "TRUE", "", "", "", "", "");
-        $formulaire->ajoutElement("Se connecter", "submit", "rechercher", "", "", "", "Se connecter", "", "", "", "");
+        $formulaire->ajoutElement("Enregistrer l'utilisateur", "submit", "enregistrer", "", "", "", "Enregistrer l'utilisateur", "", "", "", "");
         echo $formulaire->afficheForm();
-	  }
-        ?>
-    </div>
-
+	
+	?>
+	</div>

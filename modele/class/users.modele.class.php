@@ -36,7 +36,7 @@ class users extends bdd{
 		$this->email = $email;
 	}
 	
-	public function set_date_Inscription($date_inscription){
+	public function set_date_inscription($date_inscription){
 		$this->date_inscription = $date_inscription;
 	}
 	
@@ -80,7 +80,7 @@ class users extends bdd{
 		return $this->email;
 	}
 	
-	public function get_date_Inscription(){
+	public function get_date_inscription(){
 		return $this->date_inscription;
 	}
 	

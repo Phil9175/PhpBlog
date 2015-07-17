@@ -12,7 +12,7 @@ class profil {
 		$view->assign("nom", $user->get_pseudo());
 		$view->assign("idUser", $user->get_id());
 		$view->assign("email", $user->get_email());
-		$view->assign("dateInscription", date('d/m/Y H:i:s', strtotime($user->get_date_Inscription())));
+		$view->assign("dateInscription", date('d/m/Y H:i:s', strtotime($user->get_date_inscription())));
 		$article = new article;
 		$articles = $article->getResults("","","article", " WHERE statut = 'published' and type_page = 'article.layout' ORDER BY id");
 		$view->assign("allArticles", $articles);

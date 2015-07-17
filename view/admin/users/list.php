@@ -2,6 +2,7 @@
 	<div class="moduleCenter">
 		<table>
 			<tr>
+				<td>Modification</td>
 				<td>Nom Utilisateur</td>
 				<td>Email</td>
 				<td>Date Inscription</td>
@@ -13,6 +14,7 @@
 			<?php 
 	  foreach($users as $key => $values): ?>
 			<tr>
+				<td><a href="<?php echo ADRESSE_SITE; ?>/admin/users/edit/<?php echo $values['id']; ?>"><i class="fa fa-pencil-square-o fa-2x NoDecoration black"></i></a></td>
 				<td><?php echo $values['pseudo']; ?></td>
 				<td><?php echo $values['email']; ?></td>
 				<td><?php echo $values['date_inscription']; ?></td>

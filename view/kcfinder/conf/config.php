@@ -32,7 +32,7 @@ spl_autoload_register( function($class_name) {
    even if you are using session configuration.
    See http://kcfinder.sunhater.com/install for setting descriptions */
    
-$value = (security::is_connected())?FALSE:TRUE;
+$value = (security::is_connected() && security::get_can_modify_page(security::returnId()))?FALSE:TRUE;
 
 return array(
 

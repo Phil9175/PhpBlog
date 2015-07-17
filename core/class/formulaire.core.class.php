@@ -24,7 +24,7 @@ class formulaire {
 		$this->nbElementsSessionFormulaire++;
 	}
 	
-	public function ajoutElement($title, $type, $id, $class, $name, $required = FALSE, $value = "", $label_class = "", $typeVerification = ["" => ""], $rows, $cols){
+	public function ajoutElement($title, $type, $id, $class, $name, $required = FALSE, $value = "", $label_class = "", $typeVerification, $rows, $cols){
 		$label_class = ($label_class != "")?" class=\"".$label_class."\"":"";
 		$value = ($value != "" && $type != "textarea")?" value=\"".$value."\"":$value;
 		$rows = ($rows != "" && $type != "textarea")?" size=\"".$rows."\"":" rows=\"".$rows."\"";

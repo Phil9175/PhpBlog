@@ -35,17 +35,17 @@ class bdd {
 				$array_to_execute[$var] = $this->$var;
 				$set_sql[] = $var."=:".$var;
 			}
-			$sql = "UPDATE ".$table." SET ".implode(",", $set_sql). " where id = :id;";
+			$sql = "UPDATE ".$table." SET ".implode(", ", $set_sql). " where id = :id;";
 			$query = $this->connexion->prepare($sql);
 			$query->execute($array_to_execute);
 		}else{
-			$sql = "INSERT INTO ".$table."
-					( ". implode(",", $child_vars). ") 
-					VALUES ( :" . implode(",:", $child_vars). ");";
-			$query = $this->connexion->prepare($sql);
 			foreach($child_vars as $var){
 				$array_to_execute[$var] = $this->$var;
 			}
+			$sql = "INSERT INTO ".$table."
+					( ". implode(", ", $child_vars). ") 
+					VALUES ( :" . implode(", :", $child_vars). ");";
+			$query = $this->connexion->prepare($sql);
 			$query->execute($array_to_execute);
 		}
 	}

@@ -5,10 +5,14 @@ class security{
 		if (isset($_SESSION['session'])){
 			$utilisateur = new users;
 			$utilisateur->getOneBy($_SESSION["session"], "token", "users");
-			if ($utilisateur->result["id"] != 0){
-				return TRUE;
+			if (isset($utilisateur->result["id"])){
+				if ($utilisateur->result["id"] != 0){
+					return TRUE;
+				}else{
+					return FALSE;
+				}
 			}else{
-			return FALSE;	
+				return FALSE;	
 			}
 		}else{
 			return FALSE;

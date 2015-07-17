@@ -11,6 +11,23 @@
 p:empty {
   display:none;
 }
+.bg-primary {
+  color: #fff;
+  background-color: #337ab7;
+}
+.bg-success {
+  background-color: #dff0d8;
+}
+.bg-info {
+  background-color: #d9edf7;
+}
+.bg-warning {
+  background-color: #fcf8e3;
+}
+.bg-danger {
+  background-color: #f2dede;
+}
+
 .authorinfos{
 	margin-top:-20px;
 	font-style:italic;
