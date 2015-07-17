@@ -170,11 +170,13 @@ class admin
 	
 	public function users($args){
 		if (security::is_connected() === TRUE) {
-			if ($args[0] == "list"){
-				$view     = new view("admin", "users/list", "admin.layout");
-                $user  = new users;
-                $users = $user->getResults("", "", "users", "ORDER BY id");
-                $view->assign("users", $users);
+			if (security::get_can_modify_user(security::returnId())){
+				if ($args[0] == "list"){
+					$view  = new view("admin", "users/list", "admin.layout");
+					$user  = new users;
+					$users = $user->getResults("", "", "users", "ORDER BY id");
+					$view->assign("users", $users);
+				}
 			}
 		}
 	}
