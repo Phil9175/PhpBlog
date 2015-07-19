@@ -9,8 +9,8 @@ class users extends bdd{
 	protected $can_modify_categories;
 	protected $can_modify_user;
 	protected $can_modify_page;
+	protected $can_add_page;
 	protected $can_modify_commentaire;
-	protected $can_modify_media;
 	protected $token;
 	
 	
@@ -56,12 +56,12 @@ class users extends bdd{
 		$this->can_modify_page = $can_modify_page;
 	}
 	
-	public function set_can_modify_commentaire($can_modify_commentaire){
-		$this->can_modify_commentaire = $can_modify_commentaire;
+	public function set_can_add_page($can_add_page){
+		$this->can_add_page = $can_add_page;
 	}
 	
-	public function set_can_modify_media($can_modify_media){
-		$this->can_modify_media = $can_modify_media;
+	public function set_can_modify_commentaire($can_modify_commentaire){
+		$this->can_modify_commentaire = $can_modify_commentaire;
 	}
 	
 	public function set_token($token){
@@ -100,12 +100,12 @@ class users extends bdd{
 		return $this->can_modify_page;
 	}
 	
-	public function get_can_modify_commentaire(){
-		return $this->can_modify_commentaire;
+	public function get_can_add_page(){
+		return $this->can_add_page;
 	}
 	
-	public function get_can_modify_media(){
-		return $this->can_modify_media;
+	public function get_can_modify_commentaire(){
+		return $this->can_modify_commentaire;
 	}
 	
 	public function get_token(){

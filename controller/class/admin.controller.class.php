@@ -246,11 +246,11 @@ class admin
 							$utilisateur->set_email($args['email']);
 							$utilisateur->set_date_inscription(date('Y-m-d H:i:s'));
 							$utilisateur->set_password(security::makePassword($args['pass']));
-							$utilisateur->set_can_modify_categories("0");
-							$utilisateur->set_can_modify_user("0");
-							$utilisateur->set_can_modify_page("0");
-							$utilisateur->set_can_modify_commentaire("0");
-							$utilisateur->set_can_modify_media("0");
+							$utilisateur->set_can_modify_categories($args['set_can_modify_categories']);
+							$utilisateur->set_can_modify_user($args['set_can_modify_user']);
+							$utilisateur->set_can_modify_page($args['set_can_modify_page']);
+							$utilisateur->set_can_modify_commentaire($args['set_can_modify_commentaire']);
+							$utilisateur->set_can_add_page($args['set_can_add_page']);
 							$utilisateur->save("users");
 							}else{
 							$view->assign("errors", $errors);
@@ -299,11 +299,11 @@ class admin
 								}else{
 									$utilisateur->set_password($selectUser->get_password());
 								}
-								$utilisateur->set_can_modify_categories($selectUser->get_can_modify_categories());
-								$utilisateur->set_can_modify_user($selectUser->get_can_modify_user());
-								$utilisateur->set_can_modify_page($selectUser->get_can_modify_page());
-								$utilisateur->set_can_modify_commentaire($selectUser->get_can_modify_commentaire());
-								$utilisateur->set_can_modify_media($selectUser->get_can_modify_media());
+								$utilisateur->set_can_modify_categories($args['set_can_modify_categories']);
+								$utilisateur->set_can_modify_user($args['set_can_modify_user']);
+								$utilisateur->set_can_modify_page($args['set_can_modify_page']);
+								$utilisateur->set_can_modify_commentaire($args['set_can_modify_commentaire']);
+								$utilisateur->set_can_add_page($args['set_can_add_page']);
 								$utilisateur->set_token($selectUser->get_token());
 								$utilisateur->save("users");
 							}else{
@@ -320,6 +320,11 @@ class admin
 					$view->assign("id", $utilisateurAModifier->get_id());
 					$view->assign("pseudo", $utilisateurAModifier->get_pseudo());
 					$view->assign("email", $utilisateurAModifier->get_email());
+					$view->assign("can_modify_categories", $utilisateurAModifier->get_can_modify_categories());
+					$view->assign("can_modify_user", $utilisateurAModifier->get_can_modify_user());
+					$view->assign("can_modify_page", $utilisateurAModifier->get_can_modify_page());
+					$view->assign("can_modify_commentaire", $utilisateurAModifier->get_can_modify_commentaire());
+					$view->assign("can_add_page", $utilisateurAModifier->get_can_add_page());
 				}
 			}
 		}
@@ -360,6 +365,14 @@ class admin
 					$user->save("users");
 					header('Location: /admin/users/list');
 				}
+				if ($args[0] == "pageAdd"){
+					$user = new users();
+					$user->getOneBy(intval($args[1]), "id", "users");
+					$user->setFromBdd($user->result);
+					$user->set_can_add_page("1");
+					$user->save("users");
+					header('Location: /admin/users/list');
+				}
 			}
 		}
 	}
@@ -396,6 +409,14 @@ class admin
 					$user->getOneBy(intval($args[1]), "id", "users");
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_categories("0");
+					$user->save("users");
+					header('Location: /admin/users/list');
+				}
+				if ($args[0] == "pageAdd"){
+					$user = new users();
+					$user->getOneBy(intval($args[1]), "id", "users");
+					$user->setFromBdd($user->result);
+					$user->set_can_add_page("0");
 					$user->save("users");
 					header('Location: /admin/users/list');
 				}

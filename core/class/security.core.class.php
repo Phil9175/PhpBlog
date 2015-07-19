@@ -79,6 +79,17 @@ class security{
 			}
 	}
 	
+	public static function get_can_add_page($id){
+		$utilisateur = new users;
+			$utilisateur->getOneBy($id, "id", "users");
+            $utilisateur->setFromBdd($utilisateur->result);
+			if ($utilisateur->get_can_add_page() == 1){
+				return TRUE;
+			}else{
+				return FALSE;	
+			}
+	}
+	
 	public static function get_can_modify_page($id){
 		$utilisateur = new users;
 			$utilisateur->getOneBy($id, "id", "users");

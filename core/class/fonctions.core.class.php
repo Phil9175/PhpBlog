@@ -90,7 +90,7 @@ public static function pagination($current_page, $nb_pages, $link='/index/page/%
 		$separator = " / ";
 		$args = explode("/", trim($_SERVER['REQUEST_URI'], "/"));
 
-		if ($_SERVER['REQUEST_URI'] == "/"){
+		if ($_SERVER['REQUEST_URI'] == "/" or substr($_SERVER['REQUEST_URI'], 0, 11) == "/index/page"){
 			return "<a class=\"actual\" href=\"".ADRESSE_SITE."\">Accueil</a>";	
 		}
 		
@@ -116,8 +116,6 @@ public static function pagination($current_page, $nb_pages, $link='/index/page/%
 					return "<a class=\"notactive\" href=\"".ADRESSE_SITE."\">Accueil</a> / <a class=\"notactive\" href=\"".ADRESSE_SITE."/profil/view/".$user->get_id()."\" >Profil utilisateur ".$user->get_pseudo()."</a> / <span class=\"actual\">Articles publiés par ".$user->get_pseudo()."</span>";	
 				}
 			}
-			
-				return "<a class=\"notactive\" href=\"".ADRESSE_SITE."\">Accueil</a> / <span class=\"actual\">".$test->get_titre()."</span>";	
 		}
 		
 	}

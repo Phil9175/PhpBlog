@@ -62,9 +62,10 @@ class formulaire {
 				$requiredText = ($required == TRUE)?" required=\"required\"":"";
 
 		$this->elementsFormulaire[$this->nbElements] .= "<select id=\"".$id."\" class=\"".$class."\" name=\"".$name."\"".$requiredText.">\n";
-		return $this->nbElements++;
 		$this->elementsSessionFormulaire[$this->nbElementsSessionFormulaire] = ["title" => $title, "type" => "selected", "name" => $name, "required" => $required];
 		++$this->nbElementsSessionFormulaire;
+		return $this->nbElements++;
+
 	}
 	
 	public function ajoutOptionSelect($id, $title, $value=""){

@@ -8,7 +8,8 @@
 				<td>Date Inscription</td>
 				<td>Modifier Categories</td>
 				<td>Modifier Utilisateurs</td>
-				<td>Modifier Page</td>
+				<td>Modifier Articles</td>
+				<td>Ajout Page</td>
 				<td>Modifier Commentaire</td>
 			</tr>
 			<?php 
@@ -32,6 +33,11 @@
 					<a href="<?php echo ADRESSE_SITE; ?>/admin/removeRights/page/<?php echo $values['id']; ?>"><i class="fa fa-toggle-on fa-2x NoDecoration green"></i></a>
 					<?php else: ?>
 					<a href="<?php echo ADRESSE_SITE; ?>/admin/addRights/page/<?php echo $values['id']; ?>"><i class="fa fa-toggle-off fa-2x NoDecoration red"></i></a>
+					<?php endif; ?></td>
+					<td><?php if ($values['can_add_page'] == "1"): ?>
+					<a href="<?php echo ADRESSE_SITE; ?>/admin/removeRights/pageAdd/<?php echo $values['id']; ?>"><i class="fa fa-toggle-on fa-2x NoDecoration green"></i></a>
+					<?php else: ?>
+					<a href="<?php echo ADRESSE_SITE; ?>/admin/addRights/pageAdd/<?php echo $values['id']; ?>"><i class="fa fa-toggle-off fa-2x NoDecoration red"></i></a>
 					<?php endif; ?></td>
 				<td><?php if ($values['can_modify_commentaire'] == "1"): ?>
 					<a href="<?php echo ADRESSE_SITE; ?>/admin/removeRights/commentaire/<?php echo $values['id']; ?>"><i class="fa fa-toggle-on fa-2x NoDecoration green"></i></a>
