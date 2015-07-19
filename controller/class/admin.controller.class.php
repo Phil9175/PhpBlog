@@ -13,8 +13,8 @@ class admin
     {
         if (security::is_connected() === TRUE) {
             $view = new view("admin", "auth", "admin.layout");
-            $view->assign("meta_title", "Mon titre a moi");
-            $view->assign("meta_description", "Ma description a moi");
+            $view->assign("meta_title", "Administration");
+            $view->assign("meta_description", "Administration journal du referencement");
             
         } else {
             $view = new view("admin", "auth", "admin.notconnected.layout");
@@ -82,10 +82,11 @@ class admin
 							$view->assign("tempMetaTitle", $args["meta_title"]);
 							$view->assign("tempMetaDescription", $args["meta_description"]);
 							$view->assign("tempkeyword", $args["keyword"]);
+							
 						}
 					}
-					$view->assign("meta_title", "Connexion Administration");
-					$view->assign("meta_description", "Connexion administration journal du referencement");
+					$view->assign("meta_title", "Ajout article");
+					$view->assign("meta_description", "Ajout article");
 										
 					//MODIFICATION ET LISTE ARTICLES
 				} elseif ($args[0] == "list") {
@@ -93,6 +94,10 @@ class admin
 					$article  = new article;
 					$articles = $article->getResults("", "", "article", "ORDER BY id");
 					$view->assign("allArticles", $articles);
+					
+					$view->assign("meta_title", "Tout les articles");
+					$view->assign("meta_description", "Tout les articles");
+					
 				} elseif ($args[0] == "edit") {
 					$view    = new view("admin", "article/edit", "admin.layout");
 					$article = new article;
@@ -156,6 +161,9 @@ class admin
 						$view->assign("tags", $article->get_tags());
 						$view->assign("keyword", $article->get_keyword());
 					}
+					
+					$view->assign("meta_title", "Modification article");
+					$view->assign("meta_description", "Modification article");
 				}
 			}
         } else {
@@ -204,8 +212,15 @@ class admin
 					$user  = new users;
 					$users = $user->getResults("", "", "users", "ORDER BY id");
 					$view->assign("users", $users);
+					
+					$view->assign("meta_title", "Liste des utilisateurs");
+					$view->assign("meta_description", "liste des utilisateurs");
+					
 				}elseif ($args[0] == "add"){
 					$view  = new view("admin", "users/add", "admin.layout");
+					
+					$view->assign("meta_title", "Ajout utilisateur");
+					$view->assign("meta_description", "Ajout utilisateur");
 					if (isset($args['isSubmit']) && $args['isSubmit'] == "yes") {
 						$validation = new validation($_SESSION['elementsSessionFormulaire']['addUser'], $args);
 						if ($validation->validationFormulaire() === TRUE) {
@@ -247,6 +262,9 @@ class admin
 					}
 				}elseif ($args[0] == "edit"){
 						$view  = new view("admin", "users/edit", "admin.layout");
+						
+						$view->assign("meta_title", "Modification utilisateur");
+						$view->assign("meta_description", "Modification utilisateur");
 					if (isset($args['isSubmit']) && $args['isSubmit'] == "yes") {
 						$validation = new validation($_SESSION['elementsSessionFormulaire']['editUser'], $args);
 						if ($validation->validationFormulaire() === TRUE) {

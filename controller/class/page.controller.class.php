@@ -11,6 +11,7 @@ class page {
 		$articles = $article->getResults("","","article", " WHERE statut = 'published' and type_page = 'article.layout'  ORDER BY id");
 		$view = new view("article", "index", $article->get_type_page());
 		$view->assign("allArticles", $articles);
+		$view->assign("id", $article->get_id());
 		$view->assign("titre", $article->get_titre());
 		$view->assign("contenu", $article->get_contenu());
 		$view->assign("meta_title", $article->get_meta_title());

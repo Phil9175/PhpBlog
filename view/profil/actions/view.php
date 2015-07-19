@@ -5,4 +5,7 @@
 	<i class="fa fa-calendar fa-2x black"></i> Inscrit depuis le <?php echo $dateInscription; ?><br>
 	<i class="fa fa-envelope-o fa-2x black"></i> <?php echo $email; ?><br>
 	<a href="<?php echo ADRESSE_SITE; ?>/profil/articles/<?php echo $idUser; ?>"><i class="fa fa-pencil-square-o fa-2x noDecoration black"></i> Voir tout les articles de <?php echo $nom; ?></a><br>
+	<?php if (security::is_connected() === TRUE && security::get_can_modify_user(security::returnId())): ?>
+				<p class="modify"><i class="fa fa-edit black"></i><a cass="blue" href="<?php echo ADRESSE_SITE; ?>/admin/users/edit/<?php echo $idUser; ?>">Editer l'utilisateur</a></p>
+			<?php endif; ?>
     </div>
