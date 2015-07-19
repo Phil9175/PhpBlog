@@ -1,6 +1,6 @@
 <div id='cssmenu'>
 		<ul>
-			<li <?php if(substr($_SERVER['REQUEST_URI'], 0, 6) == "/admin"):?> class="active" <?php else: ?><?php endif; ?>><a href="<?php echo ADRESSE_SITE; ?>/admin">Accueil</a></li>
+			<li <?php if($_SERVER['REQUEST_URI'] == "/admin"):?> class="active" <?php else: ?><?php endif; ?>><a href="<?php echo ADRESSE_SITE; ?>/admin">Accueil</a></li>
 <?php if (security::get_can_modify_page(security::returnId())): ?>
 			<li <?php if(substr($_SERVER['REQUEST_URI'], 0, 14) == "/admin/article"):?> class="active has-sub" <?php else: ?> class="has-sub" <?php endif; ?>>
 			<a>Article</a>

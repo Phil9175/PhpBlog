@@ -11,15 +11,31 @@
 			endif;
 			?>
      	<?php
+		$tempTitle = (isset($tempTitle))?$tempTitle:"";			
+		$tempContenu = (isset($tempContenu))?$tempContenu:"";			
+		$tempUrl = (isset($tempUrl))?$tempUrl:"";			
+		$tempTags = (isset($tempTags))?$tempTags:"";			
+		$tempMetaTitle = (isset($tempMetaTitle))?$tempMetaTitle:"";			
+		$tempMetaDescription = (isset($tempMetaDescription))?$tempMetaDescription:"";			
+		$tempKeyword = (isset($tempKeyword))?$tempKeyword:"";			
+							
 		$addArticle = new formulaire("addArticle", "", "POST", "/admin/article/add", "name", "multipart/form-data");
-		$addArticle->ajoutElement("Titre", "text", "titre", "", "titre", "TRUE", "", "", "", "120", ""); 
-		$addArticle->ajoutElement("Meta Title", "text", "meta_title", "", "meta_title", "TRUE", "", "", "", "120", ""); 
-		$addArticle->ajoutElement("Meta Description", "text", "meta_description", "", "meta_description", "TRUE", "120", "", "", "", ""); 
-		$addArticle->ajoutElement("Contenu", "textarea", "contenu", "ckeditor", "contenu", "TRUE", "", "", "", "", "");
-		$addArticle->ajoutElement("Tags (separés par ;)", "text", "tags", "", "tags", "TRUE", "", "", "", "120", ""); 
-        $addArticle->ajoutElement("Enregistrer", "submit", "enregistrer", "", "", "", "Enregistrer", "", "", "", "");
+		$addArticle->ajoutElement("Titre", "text", "titre", "", "titre", "TRUE", $tempTitle, "", "", "120", ""); 
+		$addArticle->ajoutElement("Meta Title", "text", "meta_title", "", "meta_title", "TRUE", $tempMetaTitle, "", "", "120", ""); 
+		$addArticle->ajoutElement("Meta Description", "text", "meta_description", "", "meta_description", "TRUE", $tempMetaDescription, "", "", "120", ""); 
+		$addArticle->ajoutElement("URL", "text", "url", "", "url", "TRUE", $tempUrl, "", "", "120", ""); 
+		$addArticle->ajoutElement("", "textarea", "contenu", "ckeditor", "contenu", "TRUE", $tempContenu, "", "", "", "");
+		$addArticle->ajoutElement("Tags (separés par ;)", "text", "tags", "", "tags", "TRUE", $tempTags, "", "", "120", "");
+		$addArticle->ajoutElement("Mot clé", "text", "keyword", "", "keyword", "TRUE", $tempKeyword, "", "", "80", ""); 
+		$addArticle->ajoutElement("Enregistrer", "submit", "enregistrer", "", "", "", "Enregistrer", "", "", "", "");
 		echo $addArticle->afficheForm();
 		?>
-
-    </div>
+<h2 class="blue">SEOptimization</h2>
+	<div id="remarqueTitle"></div>
+	<div id="remarqueDescription"></div>
+	<div id="remarqueContenu"></div>
+	<div id="remarqueURL"></div>
+	<div id="remarqueTitre"></div>
+	<div id="remarqueTags"></div>
+	    </div>
 

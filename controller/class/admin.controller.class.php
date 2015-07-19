@@ -46,25 +46,42 @@ class admin
 					if (isset($args['isSubmit']) && $args['isSubmit'] == "yes") {
 						$validation = new validation($_SESSION['elementsSessionFormulaire']['addArticle'], $args);
 						if ($validation->validationFormulaire() === TRUE) {
-							$user = new users();
-							$user->getOneBy($_SESSION['session'], "token", "users");
-							$user->setFromBdd($user->result);
 							$article = new article;
-							$article->set_titre(validation::sanitize($args["titre"]));
-							$article->set_contenu(nl2br($args["contenu"]));
-							$article->set_statut("published");
-							$article->set_meta_title(validation::sanitize($args["meta_title"]));
-							$article->set_meta_description(validation::sanitize($args["meta_description"]));
-							$article->set_date_publication(date("Y-m-d H:i:s"));
-							$article->set_date_last_modification(date("Y-m-d H:i:s"));
-							$article->set_type_page("article.layout");
-							$article->set_idmembre($user->get_id());
-							$article->set_article_url(urlencode(str_replace(" ", "-", validation::sanitize($args["titre"]))));
-							$article->set_tags(validation::sanitize($args["tags"]));
-							$article->save("article");
+							$article->getOneBy(validation::sanitize($args['url']), "article_url", "article", "ORDER BY id");
+							$article->setFromBdd($article->result);
+							if (is_numeric($article->get_id())){
+								$errors[] = "Un article existe deja avec cette URL";
+								$view->assign("errors", $errors);
+							}else{
+								unset($article);
+								$user = new users();
+								$user->getOneBy($_SESSION['session'], "token", "users");
+								$user->setFromBdd($user->result);
+								$article = new article;
+								$article->set_titre(validation::sanitize($args["titre"]));
+								$article->set_contenu($args["contenu"]);
+								$article->set_statut("published");
+								$article->set_meta_title(validation::sanitize($args["meta_title"]));
+								$article->set_meta_description(validation::sanitize($args["meta_description"]));
+								$article->set_date_publication(date("Y-m-d H:i:s"));
+								$article->set_date_last_modification(date("Y-m-d H:i:s"));
+								$article->set_type_page("article.layout");
+								$article->set_idmembre($user->get_id());
+								$article->set_keyword($args["keyword"]);
+								$article->set_article_url(validation::sanitize($args['url']));
+								$article->set_tags(validation::sanitize($args["tags"]));
+								$article->save("article");
+							}
 						} else {
 							print_r($validation->getErreur());
 							$view->assign("errors", $validation->getErreur());
+							$view->assign("tempTitle", $args["titre"]);
+							$view->assign("tempContenu", $args["contenu"]);
+							$view->assign("tempUrl", $args["url"]);
+							$view->assign("tempTags", $args["tags"]);
+							$view->assign("tempMetaTitle", $args["meta_title"]);
+							$view->assign("tempMetaDescription", $args["meta_description"]);
+							$view->assign("tempkeyword", $args["keyword"]);
 						}
 					}
 					$view->assign("meta_title", "Connexion Administration");
@@ -76,61 +93,72 @@ class admin
 					$article  = new article;
 					$articles = $article->getResults("", "", "article", "ORDER BY id");
 					$view->assign("allArticles", $articles);
-					
 				} elseif ($args[0] == "edit") {
 					$view    = new view("admin", "article/edit", "admin.layout");
 					$article = new article;
-					if (isset($args['isSubmit']) && $args['isSubmit'] == "yes") {
+					if (isset($args['isSubmit']) && $args['isSubmit'] == "yes" && is_numeric($args[1])) {
 						$validation = new validation($_SESSION['elementsSessionFormulaire']['editArticle'], $args);
 						if ($validation->validationFormulaire() === TRUE) {
 							$user = new users();
 							$user->getOneBy($_SESSION['session'], "token", "users");
 							$user->setFromBdd($user->result);
-							
 							$article = new article;
-							$article->getOneBy($args[1], "id", "article", "ORDER BY id");
+							$article->getOneBy(validation::sanitize($args['url']), "article_url", "article", "ORDER BY id");
 							$article->setFromBdd($article->result);
-							$article->set_titre(validation::sanitize($args["titre"]));
-							$article->set_contenu(nl2br($args["contenu"]));
-							$article->set_statut("published");
-							$article->set_meta_title(validation::sanitize($args["meta_title"]));
-							$article->set_meta_description(validation::sanitize($args["meta_description"]));
-							$article->set_date_last_modification(date("Y-m-d H:i:s"));
-							$article->set_type_page("article.layout");
-							$article->set_tags(validation::sanitize($args["tags"]));
-							$article->set_article_url(urlencode(str_replace(" ", "-", str_replace("'", "-", validation::sanitize($args["titre"])))));
-							$article->save("article");
+							if (is_numeric($article->get_id()) && $article->get_id() != intval($args[1])){
+								$errors[] = "Un article existe deja avec cette URL";
+								$view->assign("errors", $errors);
+							}else{
+								unset($article);
+								$article = new article;
+								$article->getOneBy(intval($args[1]), "id", "article", "ORDER BY id");
+								$article->setFromBdd($article->result);
+								$article->set_titre(validation::sanitize($args["titre"]));
+								$article->set_contenu($args["contenu"]);
+								$article->set_statut("published");
+								$article->set_meta_title(validation::sanitize($args["meta_title"]));
+								$article->set_meta_description(validation::sanitize($args["meta_description"]));
+								$article->set_date_last_modification(date("Y-m-d H:i:s"));
+								$article->set_type_page("article.layout");
+								$article->set_tags(validation::sanitize($args["tags"]));
+								$article->set_idmembre($user->get_id());
+								$article->set_keyword($args["keyword"]);
+								$article->set_article_url(validation::sanitize($args['url']));
+								$article->save("article");
+							}
+							$view->assign("errors", $validation->getErreur());
 						} else {
 							$view->assign("errors", $validation->getErreur());
 						}
-						$article->getOneBy($args[1], "id", "article", "ORDER BY id");
+						$article->getOneBy(intval($args[1]), "id", "article", "ORDER BY id");
 						$article->setFromBdd($article->result);
 						$view->assign("id", $article->get_id());
 						$view->assign("titre", $article->get_titre());
 						$view->assign("contenu", $article->get_contenu());
 						$view->assign("formmeta_title", $article->get_meta_title());
 						$view->assign("formmeta_description", $article->get_meta_description());
+						$view->assign("article_url", $article->get_article_url());
 						$view->assign("date_publication", $article->get_date_publication());
 						$view->assign("date_last_modification", $article->get_date_last_modification());
 						$view->assign("tags", $article->get_tags());
+						$view->assign("keyword", $article->get_keyword());
 					} else {
-						$article->getOneBy($args[1], "id", "article", "ORDER BY id");
+						$article->getOneBy(intval($args[1]), "id", "article", "ORDER BY id");
 						$article->setFromBdd($article->result);
 						$view->assign("id", $article->get_id());
 						$view->assign("titre", $article->get_titre());
 						$view->assign("contenu", $article->get_contenu());
 						$view->assign("formmeta_title", $article->get_meta_title());
 						$view->assign("formmeta_description", $article->get_meta_description());
+						$view->assign("article_url", $article->get_article_url());
 						$view->assign("date_publication", $article->get_date_publication());
 						$view->assign("date_last_modification", $article->get_date_last_modification());
 						$view->assign("tags", $article->get_tags());
+						$view->assign("keyword", $article->get_keyword());
 					}
 				}
 			}
-            
-            
         } else {
-            
             $view = new view("admin", "auth", "admin.notconnected.layout");
             $view->assign("meta_title", "Connexion Administration");
             $view->assign("meta_description", "Connexion administration journal du referencement");
@@ -146,7 +174,7 @@ class admin
 		if (security::is_connected() === TRUE) {
 			if (security::get_can_modify_page(security::returnId())){
 				$article = new article("article");
-				$article->getOneBy($args[0], "id", "article");
+				$article->getOneBy(intval($args[0]), "id", "article");
 				$article->setFromBdd($article->result);
 				$article->set_statut("unpublished");
 				$article->save("article");
@@ -159,7 +187,7 @@ class admin
 		if (security::is_connected() === TRUE) {
 			if (security::get_can_modify_page(security::returnId())){
 				$article = new article("article");
-				$article->getOneBy($args[0], "id", "article");
+				$article->getOneBy(intval($args[0]), "id", "article");
 				$article->setFromBdd($article->result);
 				$article->set_statut("published");
 				$article->save("article");
@@ -226,7 +254,7 @@ class admin
 							$selectUser = new users;
 							$selectUser->getOneBy($args['pseudo'], "pseudo", "users");
 							$selectUser->setFromBdd($selectUser->result);				
-							if (is_numeric($selectUser->get_id()) && $selectUser->get_id() != $args[1]){
+							if (is_numeric($selectUser->get_id()) && $selectUser->get_id() != intval($args[1])){
 								$errors[] = "Un utilisateur existe deja avec ce pseudo";
 								$nbErreurs++;
 							}
@@ -234,14 +262,14 @@ class admin
 							$selectUser = new users;
 							$selectUser->getOneBy($args['email'], "email", "users");
 							$selectUser->setFromBdd($selectUser->result);				
-							if (is_numeric($selectUser->get_id()) && $selectUser->get_id() != $args[1]){
+							if (is_numeric($selectUser->get_id()) && $selectUser->get_id() != intval($args[1])){
 								$errors[] = "Un utilisateur existe deja avec cet email";
 								$nbErreurs++;
 							}
 							if ($nbErreurs == 0){
 								unset($selectUser);
 								$selectUser = new users;
-								$selectUser->getOneBy($args['1'], "id", "users");
+								$selectUser->getOneBy(intval($args['1']), "id", "users");
 								$selectUser->setFromBdd($selectUser->result);	
 								$utilisateur = new users;
 								$utilisateur->set_id($selectUser->get_id());
@@ -269,7 +297,7 @@ class admin
 						}
 					}
 					$utilisateurAModifier = new users;
-					$utilisateurAModifier->getOneBy($args[1], "id", "users", "ORDER BY id");
+					$utilisateurAModifier->getOneBy(intval($args[1]), "id", "users", "ORDER BY id");
 					$utilisateurAModifier->setFromBdd($utilisateurAModifier->result);
 					$view->assign("id", $utilisateurAModifier->get_id());
 					$view->assign("pseudo", $utilisateurAModifier->get_pseudo());
@@ -281,10 +309,10 @@ class admin
 	
 	public function addRights($args){
 		if (security::is_connected() === TRUE) {
-			if (security::get_can_modify_user(security::returnId())){
+			if (security::get_can_modify_user(security::returnId()) && is_numeric($args[1])){
 				if ($args[0] == "user"){
 					$user = new users();
-					$user->getOneBy($args[1], "id", "users");
+					$user->getOneBy(intval($args[1]), "id", "users");
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_user("1");
 					$user->save("users");
@@ -292,7 +320,7 @@ class admin
 				}
 				if ($args[0] == "commentaire"){
 					$user = new users();
-					$user->getOneBy($args[1], "id", "users");
+					$user->getOneBy(intval($args[1]), "id", "users");
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_commentaire("1");
 					$user->save("users");
@@ -300,7 +328,7 @@ class admin
 				}
 				if ($args[0] == "page"){
 					$user = new users();
-					$user->getOneBy($args[1], "id", "users");
+					$user->getOneBy(intval($args[1]), "id", "users");
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_page("1");
 					$user->save("users");
@@ -308,7 +336,7 @@ class admin
 				}
 				if ($args[0] == "categories"){
 					$user = new users();
-					$user->getOneBy($args[1], "id", "users");
+					$user->getOneBy(intval($args[1]), "id", "users");
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_categories("1");
 					$user->save("users");
@@ -320,10 +348,10 @@ class admin
 
 	public function removeRights($args){
 		if (security::is_connected() === TRUE) {
-			if (security::get_can_modify_user(security::returnId())){
+			if (security::get_can_modify_user(security::returnId()) && is_numeric($args[1])){
 				if ($args[0] == "user"){
 					$user = new users();
-					$user->getOneBy($args[1], "id", "users");
+					$user->getOneBy(intval($args[1]), "id", "users");
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_user("0");
 					$user->save("users");
@@ -331,7 +359,7 @@ class admin
 				}
 				if ($args[0] == "commentaire"){
 					$user = new users();
-					$user->getOneBy($args[1], "id", "users");
+					$user->getOneBy(intval($args[1]), "id", "users");
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_commentaire("0");
 					$user->save("users");
@@ -339,7 +367,7 @@ class admin
 				}
 				if ($args[0] == "page"){
 					$user = new users();
-					$user->getOneBy($args[1], "id", "users");
+					$user->getOneBy(intval($args[1]), "id", "users");
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_page("0");
 					$user->save("users");
@@ -347,7 +375,7 @@ class admin
 				}
 				if ($args[0] == "categories"){
 					$user = new users();
-					$user->getOneBy($args[1], "id", "users");
+					$user->getOneBy(intval($args[1]), "id", "users");
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_categories("0");
 					$user->save("users");

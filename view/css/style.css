@@ -11,6 +11,12 @@
 p:empty {
   display:none;
 }
+label
+{
+	display: block;
+	width: 150px;
+	float: left;
+}
 .bg-primary {
   color: #fff;
   background-color: #337ab7;

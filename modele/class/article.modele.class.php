@@ -13,6 +13,7 @@ class article extends bdd{
 	protected $idmembre;
 	protected $article_url;
 	protected $tags;
+	protected $keyword;
 	
 	public function __construct(){
 		parent::__construct();
@@ -72,6 +73,10 @@ class article extends bdd{
 		$this->tags = $tags;
 	}
 	
+	public function set_keyword($keyword){
+		$this->keyword = $keyword;
+	}
+	
 	public function get_id(){
 		return $this->id;
 	}
@@ -118,6 +123,10 @@ class article extends bdd{
 	
 	public function get_tags(){
 		return $this->tags;
+	}
+	
+	public function get_keyword(){
+		return $this->keyword;
 	}
 	
 }
