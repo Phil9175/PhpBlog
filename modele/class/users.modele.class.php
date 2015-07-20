@@ -12,7 +12,7 @@ class users extends bdd{
 	protected $can_add_page;
 	protected $can_modify_commentaire;
 	protected $token;
-	
+	protected $is_banned;
 	
 	public function __construct(){
 		parent::__construct();
@@ -68,6 +68,10 @@ class users extends bdd{
 		$this->token = $token;
 	}
 	
+	public function set_is_banned($is_banned){
+		$this->is_banned = $is_banned;
+	}
+	
 	public function get_id(){
 		return $this->id;
 	}
@@ -110,6 +114,10 @@ class users extends bdd{
 	
 	public function get_token(){
 		return $this->token;
+	}
+	
+	public function get_is_banned(){
+		return $this->is_banned;
 	}
 
 }

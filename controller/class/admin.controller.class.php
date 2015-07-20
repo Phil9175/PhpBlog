@@ -25,15 +25,21 @@ class admin
     
     public function auth($args)
     {
-        $validation = new validation($_SESSION['elementsSessionFormulaire']['identificationAdmin'], $args);
-        if ($validation->validationFormulaire() === TRUE) {
-            security::connected($args);
-        } else {
-            $view = new view("admin", "auth", "admin.notconnected.layout");
-            $view->assign("meta_title", "Connexion Administration");
-            $view->assign("meta_description", "Connexion administration journal du referencement");
-            $view->assign("errors", $validation->getErreur());
-        }
+		if (isset($args['isSubmit']) && $args['isSubmit'] == "yes") {
+			$validation = new validation($_SESSION['elementsSessionFormulaire']['identificationAdmin'], $args);
+			if ($validation->validationFormulaire() === TRUE) {
+				security::connected($args);
+			} else {
+				$view = new view("admin", "auth", "admin.notconnected.layout");
+				$view->assign("meta_title", "Connexion Administration");
+				$view->assign("meta_description", "Connexion administration journal du referencement");
+				$view->assign("errors", $validation->getErreur());
+			}
+		} else {
+				$view = new view("admin", "auth", "admin.notconnected.layout");
+				$view->assign("meta_title", "Connexion Administration");
+				$view->assign("meta_description", "Connexion administration journal du referencement");
+		}
     }
     
     public function article($args)
@@ -68,7 +74,7 @@ class admin
 								$article->set_type_page("article.layout");
 								$article->set_idmembre($user->get_id());
 								$article->set_keyword($args["keyword"]);
-								$article->set_article_url(validation::sanitize($args['url']));
+								$article->set_article_url(validation::sanitize(fonctions::remove_accents(trim($args['url']))));
 								$article->set_tags(validation::sanitize($args["tags"]));
 								$article->save("article");
 							}
@@ -128,7 +134,7 @@ class admin
 								$article->set_tags(validation::sanitize($args["tags"]));
 								$article->set_idmembre($user->get_id());
 								$article->set_keyword($args["keyword"]);
-								$article->set_article_url(validation::sanitize($args['url']));
+								$article->set_article_url(validation::sanitize(fonctions::remove_accents(trim($args['url']))));
 								$article->save("article");
 							}
 							$view->assign("errors", $validation->getErreur());
@@ -251,6 +257,7 @@ class admin
 							$utilisateur->set_can_modify_page($args['set_can_modify_page']);
 							$utilisateur->set_can_modify_commentaire($args['set_can_modify_commentaire']);
 							$utilisateur->set_can_add_page($args['set_can_add_page']);
+							$utilisateur->set_is_banned("0");
 							$utilisateur->save("users");
 							}else{
 							$view->assign("errors", $errors);
@@ -305,6 +312,7 @@ class admin
 								$utilisateur->set_can_modify_commentaire($args['set_can_modify_commentaire']);
 								$utilisateur->set_can_add_page($args['set_can_add_page']);
 								$utilisateur->set_token($selectUser->get_token());
+								$utilisateur->set_is_banned($selectUser->get_is_banned());
 								$utilisateur->save("users");
 							}else{
 							$view->assign("errors", $errors);
@@ -373,6 +381,14 @@ class admin
 					$user->save("users");
 					header('Location: /admin/users/list');
 				}
+				if ($args[0] == "banned"){
+					$user = new users();
+					$user->getOneBy(intval($args[1]), "id", "users");
+					$user->setFromBdd($user->result);
+					$user->set_is_banned("1");
+					$user->save("users");
+					header('Location: /admin/users/list');
+				}
 			}
 		}
 	}
@@ -420,9 +436,88 @@ class admin
 					$user->save("users");
 					header('Location: /admin/users/list');
 				}
+				if ($args[0] == "banned"){
+					$user = new users();
+					$user->getOneBy(intval($args[1]), "id", "users");
+					$user->setFromBdd($user->result);
+					$user->set_is_banned("0");
+					$user->save("users");
+					header('Location: /admin/users/list');
+				}
 			}
 		}
 	}
+	
+	public function moncompte($args){
+		if (security::is_connected() === TRUE && security::returnId() == $args[1]) {
+				if ($args[0] == "edit"){
+						$view  = new view("admin", "users/me", "admin.layout");
+						$view->assign("meta_title", "Modification utilisateur");
+						$view->assign("meta_description", "Modification utilisateur");
+					if (isset($args['isSubmit']) && $args['isSubmit'] == "yes") {
+						$validation = new validation($_SESSION['elementsSessionFormulaire']['editUser'], $args);
+						if ($validation->validationFormulaire() === TRUE) {
+							$nbErreurs = 0;
+							$selectUser = new users;
+							$selectUser->getOneBy($args['pseudo'], "pseudo", "users");
+							$selectUser->setFromBdd($selectUser->result);				
+							if (is_numeric($selectUser->get_id()) && $selectUser->get_id() != intval($args[1])){
+								$errors[] = "Un utilisateur existe deja avec ce pseudo";
+								$nbErreurs++;
+							}
+							unset($selectUser);
+							$selectUser = new users;
+							$selectUser->getOneBy($args['email'], "email", "users");
+							$selectUser->setFromBdd($selectUser->result);				
+							if (is_numeric($selectUser->get_id()) && $selectUser->get_id() != intval($args[1])){
+								$errors[] = "Un utilisateur existe deja avec cet email";
+								$nbErreurs++;
+							}
+							if ($nbErreurs == 0){
+								unset($selectUser);
+								$selectUser = new users;
+								$selectUser->getOneBy(intval($args['1']), "id", "users");
+								$selectUser->setFromBdd($selectUser->result);	
+								$utilisateur = new users;
+								$utilisateur->set_id($selectUser->get_id());
+								$utilisateur->set_pseudo(validation::sanitize($args['pseudo']));
+								$utilisateur->set_email($args['email']);
+								$utilisateur->set_date_inscription($selectUser->Get_date_inscription());
+								if ($args['pass'] != ""){
+									$utilisateur->set_password(security::makePassword($args['pass']));
+								}else{
+									$utilisateur->set_password($selectUser->get_password());
+								}
+								$utilisateur->set_can_modify_categories($selectUser->get_can_modify_categories());
+								$utilisateur->set_can_modify_user($selectUser->get_can_modify_user());
+								$utilisateur->set_can_modify_page($selectUser->get_can_modify_page());
+								$utilisateur->set_can_modify_commentaire($selectUser->get_can_modify_commentaire());
+								$utilisateur->set_can_add_page($selectUser->get_can_add_page());
+								$utilisateur->set_is_banned($selectUser->get_is_banned());
+								$utilisateur->set_token($selectUser->get_token());
+								$utilisateur->save("users");
+							}else{
+							$view->assign("errors", $errors);
+							}
+						}else{
+							$view->assign("errors", $validation->getErreur());
+						}
+					}
+					$utilisateurAModifier = new users;
+					$utilisateurAModifier->getOneBy(security::returnId(), "id", "users", "ORDER BY id");
+					$utilisateurAModifier->setFromBdd($utilisateurAModifier->result);
+					$view->assign("id", $utilisateurAModifier->get_id());
+					$view->assign("pseudo", $utilisateurAModifier->get_pseudo());
+					$view->assign("email", $utilisateurAModifier->get_email());
+				}
+			}else{
+				self::disconnect();
+			}
+	}
+	
+	
+	
+	
 	
 	
 }

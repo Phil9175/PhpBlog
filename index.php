@@ -1,5 +1,6 @@
 <?php
 session_start();
+date_default_timezone_set("Europe/Paris");
 include("core/class/constantes.core.php");
 
 spl_autoload_register( function($class_name) {

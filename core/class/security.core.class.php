@@ -6,7 +6,7 @@ class security{
 			$utilisateur = new users;
 			$utilisateur->getOneBy($_SESSION["session"], "token", "users");
 			if (isset($utilisateur->result["id"])){
-				if ($utilisateur->result["id"] != 0){
+				if ($utilisateur->result["id"] != 0 && $utilisateur->result["is_banned"] != 1){
 					return TRUE;
 				}else{
 					return FALSE;

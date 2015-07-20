@@ -181,10 +181,13 @@ class validation {
 		foreach($this->elements as $cle => $valeur){
 			$nbErreur += $this->validationChamp($cle);
 		}
+		/*	
 		if ($this->elements[0]["identifiantSecurite"] != $this->data["identifiantSecurite"]){
 			++$nbErreur;
 			array_push($this->tableauErreur, "Le jeton de securite du formulaire n'est pas valide.");
 		}
+		*/
+		
 		if ($nbErreur == 0){
 			return TRUE;
 		}else{

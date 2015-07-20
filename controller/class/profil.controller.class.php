@@ -16,7 +16,7 @@ class profil {
 		$view->assign("meta_description", "Profil utilisateur de ".$user->get_pseudo());
 		$view->assign("dateInscription", date('d/m/Y H:i:s', strtotime($user->get_date_inscription())));
 		$article = new article;
-		$articles = $article->getResults("","","article", " WHERE statut = 'published' and type_page = 'article.layout' ORDER BY id");
+		$articles = $article->getResults("","","article", " WHERE statut = 'published' and type_page = 'article.layout' ORDER BY date_publication DESC LIMIT 0, 5");
 		$view->assign("allArticles", $articles);
 	}
 	
@@ -31,7 +31,7 @@ class profil {
 		$view->assign("meta_description", "Articles de ".$user->get_pseudo());
 		$view->assign("idUser", $user->get_id());
 		$article = new article;
-		$articles = $article->getResults("","","article", " WHERE statut = 'published' and type_page = 'article.layout' ORDER BY id");
+		$articles = $article->getResults("","","article", " WHERE statut = 'published' and type_page = 'article.layout' ORDER BY date_publication DESC LIMIT 0, 5");
 		$view->assign("allArticles", $articles);
 		unset($article);
 		
@@ -46,7 +46,7 @@ class profil {
 			
 			
 		$article = new article;
-		$articles = $article->getResults("","","article", " where idmembre = '".$user->get_id()."' and statut = 'published' and type_page = 'article.layout'  ORDER BY id ASC LIMIT $limit_start, $pagination");
+		$articles = $article->getResults("","","article", " where idmembre = '".$user->get_id()."' and statut = 'published' and type_page = 'article.layout'  ORDER BY date_publication DESC LIMIT $limit_start, $pagination");
 		$view->assign("allUserArticles", $articles);
 
 		$requete = new bdd;

@@ -27,6 +27,7 @@
         $formulaire->ajoutElement("Se connecter", "submit", "rechercher", "", "", "", "Se connecter", "", "", "", "");
         echo $formulaire->afficheForm();
 		?>
+		<a href="<?php echo ADRESSE_SITE; ?>/inscription">Inscription</a>
 			<?php
 	  }
         ?>
