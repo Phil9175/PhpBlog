@@ -328,6 +328,7 @@ class admin
 							$utilisateur->set_can_modify_user($args['set_can_modify_user']);
 							$utilisateur->set_can_modify_page($args['set_can_modify_page']);
 							$utilisateur->set_can_modify_commentaire($args['set_can_modify_commentaire']);
+							$utilisateur->set_can_modify_menu($args['set_can_modify_menu']);
 							$utilisateur->set_can_add_page($args['set_can_add_page']);
 							$utilisateur->set_is_banned("0");
 							$utilisateur->save("users");
@@ -383,6 +384,7 @@ class admin
 								$utilisateur->set_can_modify_page($args['set_can_modify_page']);
 								$utilisateur->set_can_modify_commentaire($args['set_can_modify_commentaire']);
 								$utilisateur->set_can_add_page($args['set_can_add_page']);
+								$utilisateur->set_can_modify_menu($args['set_can_modify_menu']);
 								$utilisateur->set_token($selectUser->get_token());
 								$utilisateur->set_is_banned($selectUser->get_is_banned());
 								$utilisateur->save("users");
@@ -404,6 +406,7 @@ class admin
 					$view->assign("can_modify_user", $utilisateurAModifier->get_can_modify_user());
 					$view->assign("can_modify_page", $utilisateurAModifier->get_can_modify_page());
 					$view->assign("can_modify_commentaire", $utilisateurAModifier->get_can_modify_commentaire());
+					$view->assign("can_modify_menu", $utilisateurAModifier->get_can_modify_menu());
 					$view->assign("can_add_page", $utilisateurAModifier->get_can_add_page());
 				}
 			}else{
@@ -457,6 +460,16 @@ class admin
 					header("Location: ".ADRESSE_SITE."/admin/users/list");
 					exit;
 				}
+				if ($args[0] == "menu"){
+					$user = new users();
+					$user->getOneBy(intval($args[1]), "id", "users");
+					$user->setFromBdd($user->result);
+					$user->set_can_modify_menu("1");
+					$user->save("users");
+					header('HTTP/1.0 302 Found');
+					header("Location: ".ADRESSE_SITE."/admin/users/list");
+					exit;
+				}
 				if ($args[0] == "pageAdd"){
 					$user = new users();
 					$user->getOneBy(intval($args[1]), "id", "users");
@@ -477,6 +490,7 @@ class admin
 					header("Location: ".ADRESSE_SITE."/admin/users/list");
 					exit;
 				}
+				
 			}else{
 				header('HTTP/1.0 302 Found');
 				header("Location : ".ADRESSE_SITE."/admin/disconnect"); 
@@ -523,6 +537,16 @@ class admin
 					$user->getOneBy(intval($args[1]), "id", "users");
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_categories("0");
+					$user->save("users");
+					header('HTTP/1.0 302 Found');
+					header("Location: ".ADRESSE_SITE."/admin/users/list");
+					exit;
+				}
+				if ($args[0] == "menu"){
+					$user = new users();
+					$user->getOneBy(intval($args[1]), "id", "users");
+					$user->setFromBdd($user->result);
+					$user->set_can_modify_menu("0");
 					$user->save("users");
 					header('HTTP/1.0 302 Found');
 					header("Location: ".ADRESSE_SITE."/admin/users/list");

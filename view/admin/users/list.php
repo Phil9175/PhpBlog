@@ -11,6 +11,7 @@
 				<td>Modifier Articles</td>
 				<td>Ajout Page</td>
 				<td>Modifier Commentaire</td>
+				<td>Modifier Menu</td>
 				<td>Est banni</td>
 			</tr>
 			<?php 
@@ -44,6 +45,11 @@
 					<a href="<?php echo ADRESSE_SITE; ?>/admin/removeRights/commentaire/<?php echo $values['id']; ?>"><i class="fa fa-toggle-on fa-2x NoDecoration green"></i></a>
 					<?php else: ?>
 					<a href="<?php echo ADRESSE_SITE; ?>/admin/addRights/commentaire/<?php echo $values['id']; ?>"><i class="fa fa-toggle-off fa-2x NoDecoration red"></i></a>
+					<?php endif; ?></td>
+					<td><?php if ($values['can_modify_menu'] == "1"): ?>
+					<a href="<?php echo ADRESSE_SITE; ?>/admin/removeRights/menu/<?php echo $values['id']; ?>"><i class="fa fa-toggle-on fa-2x NoDecoration green"></i></a>
+					<?php else: ?>
+					<a href="<?php echo ADRESSE_SITE; ?>/admin/addRights/menu/<?php echo $values['id']; ?>"><i class="fa fa-toggle-off fa-2x NoDecoration red"></i></a>
 					<?php endif; ?></td>
 				<td><?php if ($values['is_banned'] == "1"): ?>
 					<a href="<?php echo ADRESSE_SITE; ?>/admin/removeRights/banned/<?php echo $values['id']; ?>"><i class="fa fa-toggle-on fa-2x NoDecoration green"></i></a>

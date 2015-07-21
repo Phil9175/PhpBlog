@@ -54,6 +54,7 @@ class inscription
 							$utilisateur->set_can_modify_page("0");
 							$utilisateur->set_can_modify_commentaire("0");
 							$utilisateur->set_can_add_page("0");
+							$utilisateur->set_can_modify_menu("0");
 							$utilisateur->set_is_banned("0");
 							$utilisateur->save("users");
 							security::connected($args);

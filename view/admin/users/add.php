@@ -25,6 +25,8 @@
 		$formulaire->ajoutElement("Ne Peut pas Modifier les articles", "radio", "set_can_modify_page", "", "set_can_modify_page", "", "0", "", "", "", "");
 		$formulaire->ajoutElement("Peut Modifier les commentaires", "radio", "set_can_modify_commentaire", "", "set_can_modify_commentaire", "", "1", "", "", "", "");
 		$formulaire->ajoutElement("Ne Peut pas Modifier les commentaires", "radio", "set_can_modify_commentaire", "", "set_can_modify_commentaire", "", "0", "", "", "", "");
+		$formulaire->ajoutElement("Peut Modifier le menu", "radio", "set_can_modify_menu", "", "set_can_modify_menu", "", "1", "", "", "", "");
+		$formulaire->ajoutElement("Ne Peut pas Modifier le lenu", "radio", "set_can_modify_menu", "", "set_can_modify_menu", "", "0", "", "", "", "");
 		$formulaire->ajoutElement("Peut Modifier les pages", "radio", "set_can_add_page", "", "set_can_add_page", "TRUE", "1", "", "", "", "");
 		$formulaire->ajoutElement("Ne Peut pas Modifier les pages", "radio", "set_can_add_page", "", "set_can_add_page", "", "0", "", "", "", "");
 		/*$utilisateur->set_can_modify_categories("0");

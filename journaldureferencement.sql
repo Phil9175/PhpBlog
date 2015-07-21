@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost:8889
--- Generation Time: Jul 21, 2015 at 07:54 PM
+-- Generation Time: Jul 21, 2015 at 11:24 PM
 -- Server version: 5.5.42-log
 -- PHP Version: 5.6.10
 
@@ -157,6 +157,7 @@ CREATE TABLE `users` (
   `can_modify_page` tinyint(1) DEFAULT NULL,
   `can_add_page` tinyint(11) NOT NULL,
   `can_modify_commentaire` tinyint(1) DEFAULT NULL,
+  `can_modify_menu` int(11) NOT NULL,
   `token` text,
   `is_banned` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
@@ -165,14 +166,14 @@ CREATE TABLE `users` (
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `pseudo`, `email`, `date_inscription`, `password`, `can_modify_categories`, `can_modify_user`, `can_modify_page`, `can_add_page`, `can_modify_commentaire`, `token`, `is_banned`) VALUES
-(1, 'ppg', 'philgranger@orange.fr', '2015-04-02 00:00:00', 'b0b9029e6e88fcf7d4d5196b1478cde5c9eb14e7', 1, 1, 1, 1, 1, 'ad55ca160ab484d1385003c895d288c41a1a1d6d', 0),
-(2, 'ssf', 'stevesaintfleur@orange.fr', '2015-04-13 00:00:00', 'b0b9029e6e88fcf7d4d5196b1478cde5c9eb14e7', 1, 0, 0, 0, 0, '', 0),
-(3, 'oualid', 'oualid@orange.fr', '2015-06-18 00:00:00', 'b0b9029e6e88fcf7d4d5196b1478cde5c9eb14e7', 0, 0, 0, 0, 1, '', 0),
-(4, 'oierhgoiehg', 'dsfsdf@orange.fr', '2015-07-17 18:55:39', '421720b557fa58f44362c37e64e4ec40250edc88', 1, 0, 1, 0, 0, '', 0),
-(6, 'ergrthtrhtrgoiehg', 'dsdfsdfdsff@orange.fr', '2015-07-17 18:55:39', '421720b557fa58f44362c37e64e4ec40250edc88', 0, 1, 0, 0, 1, '', 0),
-(7, 'utilisateur', 'utilisateur@orange.fr', '2015-07-20 16:28:10', '319f39855ef67d0bcbbd640e9b7411615894d35d', 0, 0, 0, 0, 0, NULL, 0),
-(8, 'testtest', 'test@facebook.com', '2015-07-20 16:29:55', '5984c75eebf5043b2416eaac122f7a47bdbacfa5', 0, 0, 0, 0, 0, '44885f022e50c2bd3f906de645982dca1c0c4bee', 0);
+INSERT INTO `users` (`id`, `pseudo`, `email`, `date_inscription`, `password`, `can_modify_categories`, `can_modify_user`, `can_modify_page`, `can_add_page`, `can_modify_commentaire`, `can_modify_menu`, `token`, `is_banned`) VALUES
+(1, 'ppg', 'philgranger@orange.fr', '2015-04-02 00:00:00', 'b0b9029e6e88fcf7d4d5196b1478cde5c9eb14e7', 1, 1, 1, 1, 1, 1, 'ad55ca160ab484d1385003c895d288c41a1a1d6d', 0),
+(2, 'ssf', 'stevesaintfleur@orange.fr', '2015-04-13 00:00:00', 'b0b9029e6e88fcf7d4d5196b1478cde5c9eb14e7', 1, 0, 0, 0, 0, 0, '', 0),
+(3, 'oualid', 'oualid@orange.fr', '2015-06-18 00:00:00', 'b0b9029e6e88fcf7d4d5196b1478cde5c9eb14e7', 0, 0, 0, 0, 1, 1, '', 0),
+(4, 'oierhgoiehg', 'dsfsdf@orange.fr', '2015-07-17 18:55:39', '421720b557fa58f44362c37e64e4ec40250edc88', 1, 0, 1, 0, 0, 0, '', 0),
+(6, 'ergrthtrhtrgoiehg', 'dsdfsdfdsff@orange.fr', '2015-07-17 18:55:39', '421720b557fa58f44362c37e64e4ec40250edc88', 0, 1, 0, 0, 1, 0, '', 0),
+(7, 'utilisateur', 'utilisateur@orange.fr', '2015-07-20 16:28:10', '319f39855ef67d0bcbbd640e9b7411615894d35d', 0, 0, 0, 0, 0, 0, NULL, 0),
+(8, 'testtest', 'test@facebook.com', '2015-07-20 16:29:55', '5984c75eebf5043b2416eaac122f7a47bdbacfa5', 0, 0, 0, 0, 0, 0, '44885f022e50c2bd3f906de645982dca1c0c4bee', 0);
 
 --
 -- Indexes for dumped tables

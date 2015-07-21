@@ -11,6 +11,7 @@ class users extends bdd{
 	protected $can_modify_page;
 	protected $can_add_page;
 	protected $can_modify_commentaire;
+	protected $can_modify_menu;
 	protected $token;
 	protected $is_banned;
 	
@@ -64,6 +65,10 @@ class users extends bdd{
 		$this->can_modify_commentaire = $can_modify_commentaire;
 	}
 	
+	public function set_can_modify_menu($can_modify_menu){
+		$this->can_modify_menu = $can_modify_menu;
+	}
+	
 	public function set_token($token){
 		$this->token = $token;
 	}
@@ -110,6 +115,10 @@ class users extends bdd{
 	
 	public function get_can_modify_commentaire(){
 		return $this->can_modify_commentaire;
+	}
+	
+	public function get_can_modify_menu(){
+		return $this->can_modify_menu;
 	}
 	
 	public function get_token(){
