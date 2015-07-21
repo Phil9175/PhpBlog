@@ -20,8 +20,12 @@
 		$tempKeyword = (isset($tempKeyword))?$tempKeyword:"";			
 							
 		$addArticle = new formulaire("addArticle", "", "POST", "/admin/article/add", "name", "multipart/form-data");
+		if (security::get_can_modify_page(security::returnId()) && security::get_can_add_page(security::returnId())){
+			$addArticle->ajoutElement("Créer une page", "radio", "pageouarticle", "", "pageouarticle", "", "page", "", "", "", "");
+			$addArticle->ajoutElement("Créer un article", "radio", "pageouarticle", "", "pageouarticle", "", "article", "", "", "", "");
+		}
 		$addArticle->ajoutElement("Titre", "text", "titre", "", "titre", "TRUE", $tempTitle, "", "", "120", ""); 
-		$addArticle->ajoutElement("Meta Title", "text", "meta_title", "", "meta_title", "TRUE", $tempMetaTitle, "", "", "120", ""); 
+		$addArticle->ajoutElement("Meta Title", "text", "meta_title", "", "meta_title", "TRUE", $tempMetaTitle, "", "", "120", "");
 		$addArticle->ajoutElement("Meta Description", "text", "meta_description", "", "meta_description", "TRUE", $tempMetaDescription, "", "", "120", ""); 
 		$addArticle->ajoutElement("URL", "text", "url", "", "url", "TRUE", $tempUrl, "", "", "120", ""); 
 		$addArticle->ajoutElement("", "textarea", "contenu", "ckeditor", "contenu", "TRUE", $tempContenu, "", "", "", "");

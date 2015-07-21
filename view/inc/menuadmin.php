@@ -1,12 +1,27 @@
 <div id='cssmenu'>
 		<ul>
 			<li><a href="<?php echo ADRESSE_SITE; ?>">Accueil</a></li>
-<?php if (security::get_can_modify_page(security::returnId())): ?>
+			<?php 
+			$texteMenu = "";
+			$texteMenu = (security::get_can_modify_page(security::returnId()) === TRUE && security::get_can_add_page(security::returnId()) === TRUE)?"Article / Page":$texteMenu;
+			$texteMenu = (security::get_can_modify_page(security::returnId()) === TRUE && security::get_can_add_page(security::returnId()) === FALSE)?"Article":$texteMenu;
+			$texteMenu = (security::get_can_modify_page(security::returnId()) === FALSE && security::get_can_add_page(security::returnId()) === TRUE)?"Pages":$texteMenu;
+			
+			
+			
+			
+			
+			if (security::get_can_modify_page(security::returnId()) || security::get_can_add_page(security::returnId())): ?>
 			<li <?php if(substr($_SERVER['REQUEST_URI'], 0, 14) == "/admin/article"):?> class="active has-sub" <?php else: ?> class="has-sub" <?php endif; ?>>
-			<a>Article</a>
+			<a><?php echo $texteMenu; ?></a>
 			<ul>
-				<li><a href="<?php echo ADRESSE_SITE; ?>/admin/article/add">Ajouter</a></li>
+				<li><a href="<?php echo ADRESSE_SITE; ?>/admin/article/add">Ajouter <?php echo $texteMenu; ?></a></li>
+				<?php if (security::get_can_modify_page(security::returnId())): ?>
 				<li><a href="<?php echo ADRESSE_SITE; ?>/admin/article/list">Liste des articles</a></li>
+				<?php endif; ?>
+				<?php if (security::get_can_add_page(security::returnId())): ?>
+				<li><a href="<?php echo ADRESSE_SITE; ?>/admin/page/list">Liste des pages</a></li>
+				<?php endif; ?>
 			</ul>
 			</li>
 			<?php endif; ?>

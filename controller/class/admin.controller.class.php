@@ -42,10 +42,31 @@ class admin
 		}
     }
     
+	public function page($args){
+		if (security::get_can_add_page(security::returnId())){
+			if ($args[0] == "list") {
+				$view     = new view("admin", "page/list", "admin.layout");
+				$article  = new article;
+				$articles = $article->getResults("", "", "article", "WHERE type_page = 'page.layout' ORDER BY id");
+				$view->assign("allArticles", $articles);
+				$view->assign("meta_title", "Tout les articles");
+				$view->assign("meta_description", "Tout les articles");
+			}else{
+				header('HTTP/1.0 302 Found');
+				header("Location : ".ADRESSE_SITE."/admin/disconnect"); 
+				exit;
+			}
+		}else{
+			header('HTTP/1.0 302 Found');
+			header("Location : ".ADRESSE_SITE."/admin/disconnect"); 
+			exit;
+		}
+	}
+	
     public function article($args)
     {
         if (security::is_connected() === TRUE) {
-			if (security::get_can_modify_page(security::returnId())){
+			if (security::get_can_modify_page(security::returnId()) || security::get_can_add_page(security::returnId())){
             //AJOUT ARTICLE
 				if ($args[0] == "add") {
 					$view = new view("admin", "article/add", "admin.layout");
@@ -71,7 +92,17 @@ class admin
 								$article->set_meta_description(validation::sanitize($args["meta_description"]));
 								$article->set_date_publication(date("Y-m-d H:i:s"));
 								$article->set_date_last_modification(date("Y-m-d H:i:s"));
-								$article->set_type_page("article.layout");
+								if (security::get_can_modify_page(security::returnId()) && security::get_can_add_page(security::returnId())){
+									if ($args['pageouarticle'] == "article"){
+										$article->set_type_page("article.layout");
+									}else{
+										$article->set_type_page("page.layout");
+									}
+								}elseif (security::get_can_modify_page(security::returnId()) && !security::get_can_add_page(security::returnId())){
+										$article->set_type_page("article.layout");
+								}elseif (!security::get_can_modify_page(security::returnId()) && security::get_can_add_page(security::returnId())){
+										$article->set_type_page("page.layout");
+								}
 								$article->set_idmembre($user->get_id());
 								$article->set_keyword($args["keyword"]);
 								$article->set_article_url(validation::sanitize(fonctions::remove_accents(str_replace("/", "-", str_replace(".", "-", trim($args['url']))))));
@@ -96,78 +127,102 @@ class admin
 										
 					//MODIFICATION ET LISTE ARTICLES
 				} elseif ($args[0] == "list") {
+					if (security::get_can_modify_page(security::returnId())){
 					$view     = new view("admin", "article/list", "admin.layout");
 					$article  = new article;
-					$articles = $article->getResults("", "", "article", "ORDER BY id");
+					$articles = $article->getResults("", "", "article", "WHERE type_page = 'article.layout' ORDER BY id");
 					$view->assign("allArticles", $articles);
 					
 					$view->assign("meta_title", "Tout les articles");
 					$view->assign("meta_description", "Tout les articles");
-					
+					}else{
+						header('HTTP/1.0 302 Found');
+						header("Location : ".ADRESSE_SITE."/admin/disconnect"); 
+						exit;
+					}
 				} elseif ($args[0] == "edit") {
 					$view    = new view("admin", "article/edit", "admin.layout");
 					$article = new article;
-					if (isset($args['isSubmit']) && $args['isSubmit'] == "yes" && is_numeric($args[1])) {
-						$validation = new validation($_SESSION['elementsSessionFormulaire']['editArticle'], $args);
-						if ($validation->validationFormulaire() === TRUE) {
-							$user = new users();
-							$user->getOneBy($_SESSION['session'], "token", "users");
-							$user->setFromBdd($user->result);
-							$article = new article;
-							$article->getOneBy(validation::sanitize($args['url']), "article_url", "article", "ORDER BY id");
-							$article->setFromBdd($article->result);
-							if (is_numeric($article->get_id()) && $article->get_id() != intval($args[1])){
-								$errors[] = "Un article existe deja avec cette URL";
-								$view->assign("errors", $errors);
-							}else{
-								unset($article);
+					$article->getOneBy(intval($args[1]), "id", "article", "ORDER BY id");
+					$article->setFromBdd($article->result);
+					if ((security::get_can_modify_page(security::returnId()) && $article->get_type_page() == "article.layout") || (security::get_can_add_page(security::returnId()) && $article->get_type_page() == "page.layout")){
+						if (isset($args['isSubmit']) && $args['isSubmit'] == "yes" && is_numeric($args[1])) {
+							$validation = new validation($_SESSION['elementsSessionFormulaire']['editArticle'], $args);
+							if ($validation->validationFormulaire() === TRUE) {
+								$user = new users();
+								$user->getOneBy($_SESSION['session'], "token", "users");
+								$user->setFromBdd($user->result);
 								$article = new article;
-								$article->getOneBy(intval($args[1]), "id", "article", "ORDER BY id");
+								$article->getOneBy(validation::sanitize($args['url']), "article_url", "article", "ORDER BY id");
 								$article->setFromBdd($article->result);
-								$article->set_titre(validation::sanitize($args["titre"]));
-								$article->set_contenu(fonctions::format($args["contenu"], "<br />", ""));
-								$article->set_statut("published");
-								$article->set_meta_title(validation::sanitize($args["meta_title"]));
-								$article->set_meta_description(validation::sanitize($args["meta_description"]));
-								$article->set_date_last_modification(date("Y-m-d H:i:s"));
-								$article->set_type_page("article.layout");
-								$article->set_tags(validation::sanitize($args["tags"]));
-								$article->set_idmembre($user->get_id());
-								$article->set_keyword($args["keyword"]);
-								$article->set_article_url(validation::sanitize(fonctions::remove_accents(str_replace("/", "-", str_replace(".", "-", trim($args['url']))))));
-								$article->save("article");
+								if (is_numeric($article->get_id()) && $article->get_id() != intval($args[1])){
+									$errors[] = "Un article existe deja avec cette URL";
+									$view->assign("errors", $errors);
+								}else{
+									unset($article);
+									$article = new article;
+									$article->getOneBy(intval($args[1]), "id", "article", "ORDER BY id");
+									$article->setFromBdd($article->result);
+									$article->set_titre(validation::sanitize($args["titre"]));
+									$article->set_contenu(fonctions::format($args["contenu"], "<br />", ""));
+									$article->set_statut("published");
+									$article->set_meta_title(validation::sanitize($args["meta_title"]));
+									$article->set_meta_description(validation::sanitize($args["meta_description"]));
+									$article->set_date_last_modification(date("Y-m-d H:i:s"));
+									if (security::get_can_modify_page(security::returnId()) && security::get_can_add_page(security::returnId())){
+										if ($args['pageouarticle'] == "article"){
+											$article->set_type_page("article.layout");
+										}else{
+											$article->set_type_page("page.layout");
+										}
+									}elseif (security::get_can_modify_page(security::returnId()) && !security::get_can_add_page(security::returnId())){
+											$article->set_type_page("article.layout");
+									}elseif (!security::get_can_modify_page(security::returnId()) && security::get_can_add_page(security::returnId())){
+											$article->set_type_page("page.layout");
+									}
+									$article->set_tags(validation::sanitize($args["tags"]));
+									$article->set_idmembre($user->get_id());
+									$article->set_keyword($args["keyword"]);
+									$article->set_article_url(validation::sanitize(fonctions::remove_accents(str_replace("/", "-", str_replace(".", "-", trim($args['url']))))));
+									$article->save("article");
+								}
+								$view->assign("errors", $validation->getErreur());
+							} else {
+								$view->assign("errors", $validation->getErreur());
 							}
-							$view->assign("errors", $validation->getErreur());
+							$article->getOneBy(intval($args[1]), "id", "article", "ORDER BY id");
+							$article->setFromBdd($article->result);
+							$view->assign("id", $article->get_id());
+							$view->assign("titre", $article->get_titre());
+							$view->assign("contenu", $article->get_contenu());
+							$view->assign("formmeta_title", $article->get_meta_title());
+							$view->assign("formmeta_description", $article->get_meta_description());
+							$view->assign("article_url", $article->get_article_url());
+							$view->assign("date_publication", $article->get_date_publication());
+							$view->assign("date_last_modification", $article->get_date_last_modification());
+							$view->assign("tags", $article->get_tags());
+							$view->assign("keyword", $article->get_keyword());
+							$view->assign("pageouarticle", $article->get_type_page());
 						} else {
-							$view->assign("errors", $validation->getErreur());
+							$article->getOneBy(intval($args[1]), "id", "article", "ORDER BY id");
+							$article->setFromBdd($article->result);
+							$view->assign("id", $article->get_id());
+							$view->assign("titre", $article->get_titre());
+							$view->assign("contenu", $article->get_contenu());
+							$view->assign("formmeta_title", $article->get_meta_title());
+							$view->assign("formmeta_description", $article->get_meta_description());
+							$view->assign("article_url", $article->get_article_url());
+							$view->assign("date_publication", $article->get_date_publication());
+							$view->assign("date_last_modification", $article->get_date_last_modification());
+							$view->assign("tags", $article->get_tags());
+							$view->assign("keyword", $article->get_keyword());
+							$view->assign("pageouarticle", $article->get_type_page());
 						}
-						$article->getOneBy(intval($args[1]), "id", "article", "ORDER BY id");
-						$article->setFromBdd($article->result);
-						$view->assign("id", $article->get_id());
-						$view->assign("titre", $article->get_titre());
-						$view->assign("contenu", $article->get_contenu());
-						$view->assign("formmeta_title", $article->get_meta_title());
-						$view->assign("formmeta_description", $article->get_meta_description());
-						$view->assign("article_url", $article->get_article_url());
-						$view->assign("date_publication", $article->get_date_publication());
-						$view->assign("date_last_modification", $article->get_date_last_modification());
-						$view->assign("tags", $article->get_tags());
-						$view->assign("keyword", $article->get_keyword());
-					} else {
-						$article->getOneBy(intval($args[1]), "id", "article", "ORDER BY id");
-						$article->setFromBdd($article->result);
-						$view->assign("id", $article->get_id());
-						$view->assign("titre", $article->get_titre());
-						$view->assign("contenu", $article->get_contenu());
-						$view->assign("formmeta_title", $article->get_meta_title());
-						$view->assign("formmeta_description", $article->get_meta_description());
-						$view->assign("article_url", $article->get_article_url());
-						$view->assign("date_publication", $article->get_date_publication());
-						$view->assign("date_last_modification", $article->get_date_last_modification());
-						$view->assign("tags", $article->get_tags());
-						$view->assign("keyword", $article->get_keyword());
+					}else{
+						header('HTTP/1.0 302 Found');
+						header("Location : ".ADRESSE_SITE."/admin/disconnect"); 
+						exit;
 					}
-					
 					$view->assign("meta_title", "Modification article");
 					$view->assign("meta_description", "Modification article");
 				}

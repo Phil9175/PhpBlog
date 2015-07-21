@@ -11,7 +11,14 @@
 			endif;
 			?>
      	<?php
+		$article = ($pageouarticle == "article.layout")?"article\"checked=\"checked":"1";
+		$page = ($pageouarticle == "page.layout")?"page\"checked=\"checked":"1";
+		
 		$addArticle = new formulaire("editArticle", "", "POST", "/admin/article/edit/".$id, "name");
+		if (security::get_can_modify_page(security::returnId()) && security::get_can_add_page(security::returnId())){
+		$addArticle->ajoutElement("Modifier en page", "radio", "pageouarticle", "", "pageouarticle", "", $page, "", "", "", "");
+		$addArticle->ajoutElement("Modifier en article", "radio", "pageouarticle", "", "pageouarticle", "", $article, "", "", "", "");
+		}
 		$addArticle->ajoutElement("Titre", "text", "titre", "", "titre", "TRUE", $titre, "", "", "120", ""); 
 		$addArticle->ajoutElement("Meta Title", "text", "meta_title", "", "meta_title", "TRUE", $formmeta_title, "", "", "120", ""); 
 		$addArticle->ajoutElement("Meta Description", "text", "meta_description", "", "meta_description", "TRUE", $formmeta_description, "", "", "120", ""); 
