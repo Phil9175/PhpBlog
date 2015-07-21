@@ -33,8 +33,8 @@
 				<li><a href="<?php echo ADRESSE_SITE; ?>/admin/users/add">Ajouter un utilisateur</a></li>
 			</ul>
 			</li>
-			<li><a href="<?php echo ADRESSE_SITE; ?>/admin/moncompte/edit/<?php echo security::returnId(); ?>">mon compte</a></li>
 			<?php endif; ?>
+			<li><a href="<?php echo ADRESSE_SITE; ?>/admin/moncompte/edit/<?php echo security::returnId(); ?>">mon compte</a></li>
 			<li><a href='#'>Contact</a></li>
 		</ul>
 	</div>

@@ -144,4 +144,33 @@ public static function pagination($current_page, $nb_pages, $link='/index/page/%
 		return $str;
 	}
 	
+	public static function menu(){
+			$menu = new menu();
+			$items = $menu->getResults("", "", "menu", "WHERE isChildOf = '0' ORDER BY place");
+			$menu = "<ul>";
+			foreach($items as $cle => $valeur){
+				$sousMenu = new menu();
+				$itemsSousMenu = $sousMenu->getResults("", "", "menu", "WHERE isChildOf = '".$valeur['id']."' ORDER BY place");	
+
+				$keyActive = ($_SERVER['REQUEST_URI'] == $valeur['lien'])?"active":"";
+				$keyHasSub = (!empty($itemsSousMenu))?"has-sub":"";
+				
+				$menu .= "<li class=\"".$keyActive." ".$keyHasSub."\">";
+				$menu .= "<a href=\"".$valeur['lien']."\">".$valeur['nom']."</a>";
+				if (!empty($itemsSousMenu)){
+					$menu .= "<ul>";
+					foreach($itemsSousMenu as $cleSousMenu => $valeurSousMenu){
+						$keyActive = ($_SERVER['REQUEST_URI'] == $valeurSousMenu['lien'])?"active":"";
+						$menu .= "<li class=\"".$keyActive."\">";
+						$menu .= "<a href=\"".$valeurSousMenu['lien']."\">".$valeurSousMenu['nom']."</a>";
+						$menu .= "</li>";
+					}
+					$menu .= "</ul>";
+				}
+				$menu .= "</li>";
+			}
+			$menu .= "</ul>";
+			return $menu;
+	}
+	
 }
