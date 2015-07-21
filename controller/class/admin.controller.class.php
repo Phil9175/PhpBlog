@@ -73,7 +73,7 @@ class admin
 					if (isset($args['isSubmit']) && $args['isSubmit'] == "yes") {
 						$validation = new validation($_SESSION['elementsSessionFormulaire']['addArticle'], $args);
 						if ($validation->validationFormulaire() === TRUE) {
-							$article = new article;
+														$article = new article;
 							$article->getOneBy(validation::sanitize($args['url']), "article_url", "article", "ORDER BY id");
 							$article->setFromBdd($article->result);
 							if (is_numeric($article->get_id())){
@@ -103,6 +103,7 @@ class admin
 								}elseif (!security::get_can_modify_page(security::returnId()) && security::get_can_add_page(security::returnId())){
 										$article->set_type_page("page.layout");
 								}
+								
 								$article->set_idmembre($user->get_id());
 								$article->set_keyword($args["keyword"]);
 								$article->set_article_url(validation::sanitize(fonctions::remove_accents(str_replace("/", "-", str_replace(".", "-", trim($args['url']))))));
