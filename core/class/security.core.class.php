@@ -36,13 +36,15 @@ class security{
 		$elements = validation::sanitize($elements);
 		$utilisateur->getOneBy($elements["email"], "email", "users");
 		$utilisateur->setFromBdd($utilisateur->result);
-		if ($utilisateur->get_password() == self::makePassword($elements["pass"])){
+		if ($utilisateur->get_password() == self::makePassword($elements["pass"]) && $utilisateur->get_is_banned() != 1){
 			$uniqid = fonctions::id_aleatoire();
 			$_SESSION['session'] = $uniqid;
 			$_SESSION['nomUtilisateur'] = $utilisateur->get_pseudo();
 			$utilisateur->set_token($uniqid);
 			$utilisateur->save("users");
+			header('HTTP/1.0 302 Found');
 			header("Location: ".ADRESSE_SITE."/admin");
+			exit;
 		}else{
 			self::disconnect();
 		}
@@ -51,10 +53,11 @@ class security{
 	public static function disconnect(){
 		//Suppression des variables de session
 		//redirection
-		error_reporting(0);
 		session_unset();
 		session_destroy();
-		header('Location: '.$_SERVER['HTTP_HOST'].'/');
+		header('HTTP/1.0 302 Found');
+		header("Location: ".ADRESSE_SITE);
+		exit;
 	}
 	
 	public static function get_can_modify_categories($id){
@@ -114,6 +117,14 @@ class security{
 	
 	public static function makePassword($pass){
 		return sha1($pass);
+	}
+	
+	public static function addAttack(){
+		
+	}
+	
+	public static function checkBan(){
+		
 	}
 	
 }

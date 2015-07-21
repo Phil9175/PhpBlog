@@ -65,7 +65,7 @@ class admin
 								$user->setFromBdd($user->result);
 								$article = new article;
 								$article->set_titre(validation::sanitize($args["titre"]));
-								$article->set_contenu($args["contenu"]);
+								$article->set_contenu(fonctions::format($args["contenu"], "<br />", ""));
 								$article->set_statut("published");
 								$article->set_meta_title(validation::sanitize($args["meta_title"]));
 								$article->set_meta_description(validation::sanitize($args["meta_description"]));
@@ -74,7 +74,7 @@ class admin
 								$article->set_type_page("article.layout");
 								$article->set_idmembre($user->get_id());
 								$article->set_keyword($args["keyword"]);
-								$article->set_article_url(validation::sanitize(fonctions::remove_accents(trim($args['url']))));
+								$article->set_article_url(validation::sanitize(fonctions::remove_accents(str_replace("/", "-", str_replace(".", "-", trim($args['url']))))));
 								$article->set_tags(validation::sanitize($args["tags"]));
 								$article->save("article");
 							}
@@ -125,7 +125,7 @@ class admin
 								$article->getOneBy(intval($args[1]), "id", "article", "ORDER BY id");
 								$article->setFromBdd($article->result);
 								$article->set_titre(validation::sanitize($args["titre"]));
-								$article->set_contenu($args["contenu"]);
+								$article->set_contenu(fonctions::format($args["contenu"], "<br />", ""));
 								$article->set_statut("published");
 								$article->set_meta_title(validation::sanitize($args["meta_title"]));
 								$article->set_meta_description(validation::sanitize($args["meta_description"]));
@@ -134,7 +134,7 @@ class admin
 								$article->set_tags(validation::sanitize($args["tags"]));
 								$article->set_idmembre($user->get_id());
 								$article->set_keyword($args["keyword"]);
-								$article->set_article_url(validation::sanitize(fonctions::remove_accents(trim($args['url']))));
+								$article->set_article_url(validation::sanitize(fonctions::remove_accents(str_replace("/", "-", str_replace(".", "-", trim($args['url']))))));
 								$article->save("article");
 							}
 							$view->assign("errors", $validation->getErreur());
@@ -171,6 +171,10 @@ class admin
 					$view->assign("meta_title", "Modification article");
 					$view->assign("meta_description", "Modification article");
 				}
+			}else{
+				header('HTTP/1.0 302 Found');
+				header("Location : ".ADRESSE_SITE."/admin/disconnect"); 
+				exit;
 			}
         } else {
             $view = new view("admin", "auth", "admin.notconnected.layout");
@@ -192,7 +196,13 @@ class admin
 				$article->setFromBdd($article->result);
 				$article->set_statut("unpublished");
 				$article->save("article");
-				header('Location: /admin/article/list');
+				header('HTTP/1.0 302 Found');
+				header("Location: ".ADRESSE_SITE."/admin/article/list");
+				exit;
+			}else{
+				header('HTTP/1.0 302 Found');
+				header("Location : ".ADRESSE_SITE."/admin/disconnect"); 
+				exit;
 			}
 		}
 	}
@@ -205,7 +215,13 @@ class admin
 				$article->setFromBdd($article->result);
 				$article->set_statut("published");
 				$article->save("article");
-				header('Location: /admin/article/list');
+				header('HTTP/1.0 302 Found');
+				header("Location: ".ADRESSE_SITE."/admin/article/list");
+				exit;
+			}else{
+				header('HTTP/1.0 302 Found');
+				header("Location : ".ADRESSE_SITE."/admin/disconnect"); 
+				exit;
 			}
 		}
 	}
@@ -334,6 +350,10 @@ class admin
 					$view->assign("can_modify_commentaire", $utilisateurAModifier->get_can_modify_commentaire());
 					$view->assign("can_add_page", $utilisateurAModifier->get_can_add_page());
 				}
+			}else{
+				header('HTTP/1.0 302 Found');
+				header("Location : ".ADRESSE_SITE."/admin/disconnect"); 
+				exit;
 			}
 		}
 	}
@@ -347,7 +367,9 @@ class admin
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_user("1");
 					$user->save("users");
-					header('Location: /admin/users/list');
+					header('HTTP/1.0 302 Found');
+					header("Location: ".ADRESSE_SITE."/admin/users/list");
+					exit;
 				}
 				if ($args[0] == "commentaire"){
 					$user = new users();
@@ -355,7 +377,9 @@ class admin
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_commentaire("1");
 					$user->save("users");
-					header('Location: /admin/users/list');
+					header('HTTP/1.0 302 Found');
+					header("Location: ".ADRESSE_SITE."/admin/users/list");
+					exit;
 				}
 				if ($args[0] == "page"){
 					$user = new users();
@@ -363,7 +387,9 @@ class admin
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_page("1");
 					$user->save("users");
-					header('Location: /admin/users/list');
+					header('HTTP/1.0 302 Found');
+					header("Location: ".ADRESSE_SITE."/admin/users/list");
+					exit;
 				}
 				if ($args[0] == "categories"){
 					$user = new users();
@@ -371,7 +397,9 @@ class admin
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_categories("1");
 					$user->save("users");
-					header('Location: /admin/users/list');
+					header('HTTP/1.0 302 Found');
+					header("Location: ".ADRESSE_SITE."/admin/users/list");
+					exit;
 				}
 				if ($args[0] == "pageAdd"){
 					$user = new users();
@@ -379,7 +407,9 @@ class admin
 					$user->setFromBdd($user->result);
 					$user->set_can_add_page("1");
 					$user->save("users");
-					header('Location: /admin/users/list');
+					header('HTTP/1.0 302 Found');
+					header("Location: ".ADRESSE_SITE."/admin/users/list");
+					exit;
 				}
 				if ($args[0] == "banned"){
 					$user = new users();
@@ -387,8 +417,14 @@ class admin
 					$user->setFromBdd($user->result);
 					$user->set_is_banned("1");
 					$user->save("users");
-					header('Location: /admin/users/list');
+					header('HTTP/1.0 302 Found');
+					header("Location: ".ADRESSE_SITE."/admin/users/list");
+					exit;
 				}
+			}else{
+				header('HTTP/1.0 302 Found');
+				header("Location : ".ADRESSE_SITE."/admin/disconnect"); 
+				exit;
 			}
 		}
 	}
@@ -402,7 +438,9 @@ class admin
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_user("0");
 					$user->save("users");
-					header('Location: /admin/users/list');
+					header('HTTP/1.0 302 Found');
+					header("Location: ".ADRESSE_SITE."/admin/users/list");
+					exit;
 				}
 				if ($args[0] == "commentaire"){
 					$user = new users();
@@ -410,7 +448,9 @@ class admin
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_commentaire("0");
 					$user->save("users");
-					header('Location: /admin/users/list');
+					header('HTTP/1.0 302 Found');
+					header("Location: ".ADRESSE_SITE."/admin/users/list");
+					exit;
 				}
 				if ($args[0] == "page"){
 					$user = new users();
@@ -418,7 +458,9 @@ class admin
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_page("0");
 					$user->save("users");
-					header('Location: /admin/users/list');
+					header('HTTP/1.0 302 Found');
+					header("Location: ".ADRESSE_SITE."/admin/users/list");
+					exit;
 				}
 				if ($args[0] == "categories"){
 					$user = new users();
@@ -426,7 +468,9 @@ class admin
 					$user->setFromBdd($user->result);
 					$user->set_can_modify_categories("0");
 					$user->save("users");
-					header('Location: /admin/users/list');
+					header('HTTP/1.0 302 Found');
+					header("Location: ".ADRESSE_SITE."/admin/users/list");
+					exit;
 				}
 				if ($args[0] == "pageAdd"){
 					$user = new users();
@@ -434,7 +478,9 @@ class admin
 					$user->setFromBdd($user->result);
 					$user->set_can_add_page("0");
 					$user->save("users");
-					header('Location: /admin/users/list');
+					header('HTTP/1.0 302 Found');
+					header("Location: ".ADRESSE_SITE."/admin/users/list");
+					exit;
 				}
 				if ($args[0] == "banned"){
 					$user = new users();
@@ -442,8 +488,14 @@ class admin
 					$user->setFromBdd($user->result);
 					$user->set_is_banned("0");
 					$user->save("users");
-					header('Location: /admin/users/list');
+					header('HTTP/1.0 302 Found');
+					header("Location: ".ADRESSE_SITE."/admin/users/list");
+					exit;
 				}
+			}else{
+				header('HTTP/1.0 302 Found');
+				header("Location : ".ADRESSE_SITE."/admin/disconnect"); 
+				exit;
 			}
 		}
 	}
@@ -511,7 +563,9 @@ class admin
 					$view->assign("email", $utilisateurAModifier->get_email());
 				}
 			}else{
-				self::disconnect();
+				header('HTTP/1.0 302 Found');
+				header("Location : ".ADRESSE_SITE."/admin/disconnect"); 
+				exit;
 			}
 	}
 	

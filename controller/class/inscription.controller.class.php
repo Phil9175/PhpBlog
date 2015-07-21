@@ -57,7 +57,9 @@ class inscription
 							$utilisateur->set_is_banned("0");
 							$utilisateur->save("users");
 							security::connected($args);
+							header('HTTP/1.0 302 Found');
 							header("Location: ".ADRESSE_SITE);
+							exit;
 							}else{
 							$view->assign("errors", $errors);
 							}
