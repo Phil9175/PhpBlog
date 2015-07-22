@@ -34,6 +34,12 @@
 			</ul>
 			</li>
 			<?php endif; ?>
+			<?php if (security::get_can_modify_menu(security::returnId())): ?>
+			<li <?php if(substr($_SERVER['REQUEST_URI'], 0, 11) == "/admin/menu"):?> class="active" <?php endif; ?>>
+			<a href="<?php echo ADRESSE_SITE; ?>/admin/menu/edit">Menu</a>
+			</li>
+			<?php endif; ?>
+			
 			<li><a href="<?php echo ADRESSE_SITE; ?>/admin/moncompte/edit/<?php echo security::returnId(); ?>">mon compte</a></li>
 			<li><a href='#'>Contact</a></li>
 		</ul>

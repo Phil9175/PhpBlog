@@ -115,6 +115,17 @@ class security{
 			}
 	}
 	
+	public static function get_can_modify_menu($id){
+		$utilisateur = new users;
+			$utilisateur->getOneBy($id, "id", "users");
+            $utilisateur->setFromBdd($utilisateur->result);
+			if ($utilisateur->get_can_modify_menu() == 1){
+				return TRUE;
+			}else{
+				return FALSE;	
+			}
+	}
+	
 	public static function makePassword($pass){
 		return sha1($pass);
 	}

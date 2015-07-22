@@ -1,16 +1,16 @@
 
-    <div class="module">
-	 <?php if (isset($_POST['isSubmit'])):
+<div class="moduleCenter">
+		<?php if (isset($_POST['isSubmit'])):
 	  				if (isset($errors)):
 		  			foreach($errors as $key => $values):
 			?>
-            <li><?php echo $values; ?>
-            <?php 
+		<li><?php echo $values; ?>
+			<?php 
 					endforeach; 
 				endif;
 			endif;
 			?>
-     	<?php
+			<?php
 		$article = ($pageouarticle == "article.layout")?"article\"checked=\"checked":"1";
 		$page = ($pageouarticle == "page.layout")?"page\"checked=\"checked":"1";
 		
@@ -30,12 +30,11 @@
         $addArticle->ajoutElement("Enregistrer", "submit", "enregistrer", "", "", "", "Enregistrer", "", "", "", "");
 		echo $addArticle->afficheForm();
 		?>
-		<h2 class="blue">SEOptimization</h2>
-	<div id="remarqueTitle"></div>
-	<div id="remarqueDescription"></div>
-	<div id="remarqueContenu"></div>
-	<div id="remarqueURL"></div>
-	<div id="remarqueTitre"></div>
-	<div id="remarqueTags"></div>
-	    </div>
-
+			<h2 class="blue">SEOptimization</h2>
+			<div id="remarqueTitle"></div>
+			<div id="remarqueDescription"></div>
+			<div id="remarqueContenu"></div>
+			<div id="remarqueURL"></div>
+			<div id="remarqueTitre"></div>
+			<div id="remarqueTags"></div>
+	</div>

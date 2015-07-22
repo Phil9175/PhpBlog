@@ -78,5 +78,10 @@ class bdd {
 		$query->setFetchMode(PDO::FETCH_ASSOC);
 		return $query->fetchAll(PDO::FETCH_ASSOC);
 	}
+	
+	public function requeteDelete($requete){
+		$query = $this->connexion->prepare($requete);
+		$query->execute();
+	}
 }
 ?>

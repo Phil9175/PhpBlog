@@ -6,6 +6,7 @@ class menu extends bdd{
 	protected $place;
 	protected $lien;
 	protected $isChildOf;
+	protected $maj;
 	
 	public function __construct(){
 		parent::__construct();
@@ -36,6 +37,10 @@ class menu extends bdd{
 		$this->isChildOf = $isChildOf;
 	}
 	
+	public function set_maj($maj){
+		$this->maj = $maj;
+	}
+	
 	public function get_id(){
 		return $this->id;
 	}
@@ -54,6 +59,10 @@ class menu extends bdd{
 	
 	public function get_isChildOf(){
 		return $this->isChildOf;
+	}
+	
+	public function get_maj(){
+		return $this->maj;
 	}
 }
 ?>

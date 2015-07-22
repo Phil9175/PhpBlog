@@ -649,6 +649,44 @@ class admin
 			}
 	}
 	
+	public function menu($args){
+		 if (security::is_connected() === TRUE && security::get_can_modify_menu(security::returnId())){
+            $view = new view("admin", "menu/edit", "admin.layout");
+            $view->assign("meta_title", "Administration");
+            $view->assign("meta_description", "Administration journal du referencement");
+			
+			$date = date('Y-m-d H:i:s');
+			$i=0;
+			if (isset($args['tab'])) {
+				foreach($args['tab'] as $key => $value){
+					$menu = new menu();
+					$cle = (is_numeric($key))?$key:"";
+					$menu->set_id($cle);
+					$menu->set_nom($value['nom']);
+					$menu->set_place($i);
+					$menu->set_lien($value['lien']);
+					$menu->set_isChildOf($value['isChildOf']);
+					$menu->set_maj($date);
+					$menu->save("menu");
+					unset($menu);
+					$i++;
+				}
+				$menu = new menu();
+				$menu->requeteDelete("DELETE FROM menu WHERE maj != '".$date."'");
+				unset($menu);
+				
+			}
+            
+        }else{
+				header('HTTP/1.0 302 Found');
+				header("Location : ".ADRESSE_SITE."/admin/disconnect"); 
+				exit;
+			}
+		
+		
+		
+		
+	}
 	
 	
 	

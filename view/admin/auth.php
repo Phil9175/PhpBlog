@@ -1,5 +1,5 @@
 
-    <div class="module">
+	<div class="moduleCenter">
       <h3>Se connecter</h3>
       <ul>
       <?php if (isset($_POST['isSubmit'])):

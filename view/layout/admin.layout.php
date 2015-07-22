@@ -1,5 +1,6 @@
 <?php include("view/inc/head.php"); ?>
-	<!-- MENU -->
+<!-- MENU -->
+
 	<div class="grid grid-pad">
 		<div class="col-3-3">
 			<div class="module">
@@ -33,10 +34,31 @@
 			</div>
 		</div>
 	</div>
-	<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/jquery-1.11.3.min.js"></script> 
-	<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/script.js"></script> 
-	<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/menu.js"></script>
-	<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/ckeditor/ckeditor.js"></script>
 
-</body>
-</html>
+<link rel="stylesheet" href="http://code.jquery.com/ui/1.11.4/themes/smoothness/jquery-ui.css">
+<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/jquery-1.11.3.min.js"></script>
+<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/jquery-ui.min.js"></script>
+<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/menu.js"></script>
+
+<?php
+if (security::get_can_modify_page(security::returnId()) || security::get_can_add_page(security::returnId())):
+	if ($_SERVER['REQUEST_URI'] == "/admin/article/add" || substr($_SERVER['REQUEST_URI'], 0, 19) == "/admin/article/edit"):
+?>
+<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/ckeditor/ckeditor.js"></script> 
+<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/script.js"></script> 
+<?php
+	endif;
+endif;
+?>
+<?php
+if (security::get_can_modify_menu(security::returnId())):
+	if ($_SERVER['REQUEST_URI'] == "/admin/menu/edit"):
+?>
+<script type="text/javascript" src="<?php echo ADRESSE_SITE; ?>/view/js/scriptMenu.js"></script> 
+<?php
+	endif;
+endif;
+?>
+
+
+</body></html>

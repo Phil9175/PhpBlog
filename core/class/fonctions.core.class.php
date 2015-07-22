@@ -173,4 +173,32 @@ public static function pagination($current_page, $nb_pages, $link='/index/page/%
 			return $menu;
 	}
 	
+	public static function menuEdit(){
+		 if (security::is_connected() === TRUE && security::get_can_modify_menu(security::returnId())){
+				$menu = new menu();
+				$items = $menu->getResults("", "", "menu", "WHERE isChildOf = '0' ORDER BY place");
+				
+				$menu = "<ul class=\"sortable list-unstyled\" id=\"sortable\">
+";
+				foreach($items as $cle => $valeur){
+					$sousMenu = new menu();
+					$itemsSousMenu = $sousMenu->getResults("", "", "menu", "WHERE isChildOf = '".$valeur['id']."' ORDER BY place");	
+					
+					$menu .= "<li class=\"item\" id=\"".$valeur['id']."\"><h3 class=\"block-title\">".$valeur['nom']."</h3><div class=\"block block-title\"><label>".$valeur['nom']."</label><input type=\"hidden\" name=\"tab[".$valeur['id']."][id]\" value=\"".$valeur['id']."\"><input type=\"hidden\" id=\"isChildOf".$valeur['id']."\" name=\"tab[".$valeur['id']."][isChildOf]\" value=\"0\"><input type=\"text\" name=\"tab[".$valeur['id']."][nom]\" value=\"".$valeur['nom']."\" id=\"nom".$valeur['id']."\"><br><label>Lien du Menu</label><input type=\"text\" name=\"tab[".$valeur['id']."][lien]\" value=\"".$valeur['lien']."\" id=\"lien".$valeur['id']."\"><br><a href=\"#\" onClick=\"javascript:supprimerElement('#".$valeur['id']."');return false;\">Supprimer l'item</a></div>
+					";
+						$menu .= "<ul class=\"sortable list-unstyled\">";
+					if (!empty($itemsSousMenu)){
+						foreach($itemsSousMenu as $cleSousMenu => $valeurSousMenu){
+							$menu .= "<li class=\"item\" id=\"".$valeurSousMenu['id']."\"><h3 class=\"block-title\">".$valeurSousMenu['nom']."</h3><div class=\"block block-title\"><label>".$valeurSousMenu['nom']."</label><input type=\"hidden\" name=\"tab[".$valeurSousMenu['id']."][id]\" value=\"".$valeurSousMenu['id']."\"><input type=\"hidden\" id=\"isChildOf".$valeur['id']."\" name=\"tab[".$valeurSousMenu['id']."][isChildOf]\" value=\"".$valeur['id']."\"><input type=\"text\" name=\"tab[".$valeurSousMenu['id']."][nom]\" value=\"".$valeurSousMenu['nom']."\" id=\"nom".$valeurSousMenu['id']."\"><br><label>Lien du Menu</label><input type=\"text\" name=\"tab[".$valeurSousMenu['id']."][lien]\" value=\"".$valeurSousMenu['lien']."\" id=\"lien".$valeurSousMenu['id']."\"><br><a href=\"#\" onClick=\"javascript:supprimerElement('#".$valeurSousMenu['id']."');return false;\">Supprimer l'item</a></div>";
+							$menu .= "</li>";
+						}
+					}
+						$menu .= "</ul>";
+					$menu .= "</li>";
+				}
+				$menu .= "</ul>";
+				return $menu;
+		}
+	}
+	
 }
