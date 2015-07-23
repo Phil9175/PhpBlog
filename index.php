@@ -41,6 +41,7 @@ if (class_exists($object)){
 }elseif ($test->testArticle()){
 		unset($obj);
 		$obj = new page;
+		$obj->$action($args);
 }else{
 	$obj = new notFound;
 }

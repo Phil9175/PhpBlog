@@ -1,4 +1,16 @@
-(function($) {
+var positionElementInPage = $('#cssmenu').offset().top;
+		$(window).scroll(
+			function() {
+				if ($(window).scrollTop() >= positionElementInPage) {
+					// fixed
+					$('#cssmenu').addClass("floatable");
+				} else {
+					// relative
+					$('#cssmenu').removeClass("floatable");
+				}
+			}
+		);
+		(function($) {
 
   $.fn.menumaker = function(options) {
       

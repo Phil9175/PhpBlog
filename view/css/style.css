@@ -11,6 +11,14 @@
 p:empty {
   display:none;
 }
+#cssmenu.floatable{
+	position:fixed;
+	top:0;
+	z-index:9999;
+	width:1069px;
+	margin-top:0;
+}
+
 div.article img{
 	margin-top:10px;
 	margin-left:10px;
@@ -77,6 +85,9 @@ label
 	border-bottom: 1px solid #eee;
 	font-size: 30px;
 	margin-top:0px;
+}
+.comment{
+	border-bottom: 1px solid #eee;
 }
 .justify{
 	text-align: justify;
