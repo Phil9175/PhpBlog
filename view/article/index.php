@@ -15,8 +15,8 @@
 			<?php foreach($tabArticles as $key => $value): ?>
 			<div class="col-1-3"> <a href="<?php echo ADRESSE_SITE."/".$value['article_url']; ?>"><?php echo $value['titre']; ?></a></div>
 			<?php endforeach; ?>
-		</div>
-		<?php
+			</div>
+			<?php
 			endif;
 			if (security::is_connected()): 
 			?>
@@ -28,11 +28,12 @@
 				$formulaire->ajoutElement("", "textarea", "commentaire", "entryInput", "commentaire", "TRUE", "", "", "", "10", "66");
 				$formulaire->ajoutElement("Envoyer le commentaire", "submit", "commenter", "entryInput", "", "", "Envoyer le commentaire", "", "", "", "");
 				echo $formulaire->afficheForm();
-			endif;
+			
 			?>
 			</div>
 		</div>
 		<?php
+		endif;
 			if (!empty($commentaire)):
 				foreach($commentaire as $key => $value):
 			?>

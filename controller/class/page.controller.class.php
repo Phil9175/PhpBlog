@@ -52,7 +52,9 @@ class page {
 		$view->assign("tabArticles", $tabArticles);
 		
 		$commentaire = new commentaire();
-		$view->assign("commentaire", $commentaire->requete("SELECT commentaire.texte as texte, commentaire.date_publication, commentaire.id as idCommentaire, users.pseudo, users.id as idUtilisateur FROM commentaire, users, article where users.id = commentaire.idUsers and article.id = '".$article->get_id()."'"));
+		$view->assign("commentaire", $commentaire->requete("SELECT commentaire.texte, commentaire.date_publication, commentaire.id, users.pseudo, users.id FROM commentaire, users where users.id = commentaire.idUsers and commentaire.idArticle = '".$article->get_id()."'"));
+		
+		
 	}
 	
 	public function comment($args){
