@@ -9,7 +9,7 @@
 </head>
 <body>
 	<!-- HEADER -->
-	<div class="grid grid-pad">
+	<div class="grid grid-pad" id="header">
 		<div class="col-2-8"> <a href="<?php echo ADRESSE_SITE; ?>"><img src="<?php echo ADRESSE_SITE; ?>/images/JDR.png" height="40px"></a><br>
 			<em>Journal du Référencement</em> </div>
 		<div class="col-4-8"> Bienvenue sur le Journal Du Référencement<br>
@@ -22,9 +22,9 @@
 			<?php
 	  }else{
         $formulaire = new formulaire("identificationAdmin", "", "POST", "/admin/auth", "");
-        $formulaire->ajoutElement("Email", "text", "email", "", "email", "", "", "", ["email" => ""], "", "");
-		$formulaire->ajoutElement("Mot de passe", "password", "pass", "", "pass", "", "", "", "", "", "");
-        $formulaire->ajoutElement("Se connecter", "submit", "rechercher", "", "", "", "Se connecter", "", "", "", "");
+        $formulaire->ajoutElement("Email", "text", "email", "entryInputIndex", "email", "", "", "", ["email" => ""], "", "");
+		$formulaire->ajoutElement("Mot de passe", "password", "pass", "entryInputIndex", "pass", "", "", "", "", "", "");
+        $formulaire->ajoutElement("Se connecter", "submit", "Connexion", "entryInputIndex", "", "", "Se connecter", "", "", "", "");
         echo $formulaire->afficheForm();
 		?>
 		<a href="<?php echo ADRESSE_SITE; ?>/inscription">Inscription</a>

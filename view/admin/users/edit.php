@@ -14,9 +14,9 @@
       </ul>
 	<?php
 	 	$formulaire = new formulaire("editUser", "", "POST", "/admin/users/edit/".$id, "");
-        $formulaire->ajoutElement("Email", "text", "email", "", "email", "TRUE", $email, "", ["email" => ""], "", "");
-        $formulaire->ajoutElement("Pseudo", "text", "pseudo", "", "pseudo", "TRUE", $pseudo, "", "", "", "");
-		$formulaire->ajoutElement("Mot de passe", "password", "pass", "", "pass", "", "", "", "", "", "");
+        $formulaire->ajoutElement("Email", "text", "email", "entryInput", "email", "TRUE", $email, "", ["email" => ""], "", "");
+        $formulaire->ajoutElement("Pseudo", "text", "pseudo", "entryInput", "pseudo", "TRUE", $pseudo, "", "", "", "");
+		$formulaire->ajoutElement("Mot de passe", "password", "pass", "entryInput", "pass", "", "", "", "", "", "");
 
 		$checkedCategoriesYes = ($can_modify_categories == 1)?"1\"checked=\"checked":"1";
 		$checkedUserYes = ($can_modify_user == 1)?"1\"checked=\"checked":"1";
@@ -43,7 +43,7 @@
 		$formulaire->ajoutElement("Ne Peut pas Modifier le menu", "radio", "set_can_modify_menu", "", "set_can_modify_menu", "", $checkedMenuNo, "", "", "", "");
 		$formulaire->ajoutElement("Peut Modifier les pages", "radio", "set_can_add_page", "", "set_can_add_page", "", $checkedPageAddYes, "", "", "", "");
 		$formulaire->ajoutElement("Ne Peut pas Modifier les pages", "radio", "set_can_add_page", "", "set_can_add_page", "", $checkedPageAddNo, "", "", "", "");
-        $formulaire->ajoutElement("Enregistrer l'utilisateur", "submit", "enregistrer", "", "", "", "Enregistrer l'utilisateur", "", "", "", "");
+        $formulaire->ajoutElement("Enregistrer l'utilisateur", "submit", "enregistrer", "entryInput", "", "", "Enregistrer l'utilisateur", "", "", "", "");
         echo $formulaire->afficheForm();
 	
 	?>

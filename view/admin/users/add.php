@@ -14,9 +14,9 @@
       </ul>
 	<?php
 	 	$formulaire = new formulaire("addUser", "", "POST", "/admin/users/add", "");
-        $formulaire->ajoutElement("Email", "text", "email", "", "email", "TRUE", "", "", ["email" => ""], "", "");
-        $formulaire->ajoutElement("Pseudo", "text", "pseudo", "", "pseudo", "TRUE", "", "", "", "", "");
-		$formulaire->ajoutElement("Mot de passe", "password", "pass", "", "pass", "TRUE", "", "", "", "", "");
+        $formulaire->ajoutElement("Email", "text", "email", "entryInput", "email", "TRUE", "", "", ["email" => ""], "", "");
+        $formulaire->ajoutElement("Pseudo", "text", "pseudo", "entryInput", "pseudo", "TRUE", "", "", "", "", "");
+		$formulaire->ajoutElement("Mot de passe", "password", "pass", "entryInput", "pass", "TRUE", "", "", "", "", "");
 		$formulaire->ajoutElement("Peut Modifier les articles", "radio", "set_can_modify_categories", "", "set_can_modify_categories", "", "1", "", "", "", "");
 		$formulaire->ajoutElement("Ne Peut pas Modifier les articles", "radio", "set_can_modify_categories", "", "set_can_modify_categories", "", "0", "", "", "", "");
 		$formulaire->ajoutElement("Peut Modifier les utilisateurs", "radio", "set_can_modify_user", "", "set_can_modify_user", "", "1", "", "", "", "");
@@ -36,7 +36,7 @@
 							$utilisateur->set_can_add_page("0");
 							
 							*/
-        $formulaire->ajoutElement("Enregistrer l'utilisateur", "submit", "enregistrer", "", "", "", "Enregistrer l'utilisateur", "", "", "", "");
+        $formulaire->ajoutElement("Enregistrer l'utilisateur", "submit", "enregistrer", "entryInput", "", "", "Enregistrer l'utilisateur", "", "", "", "");
         echo $formulaire->afficheForm();
 	
 	?>

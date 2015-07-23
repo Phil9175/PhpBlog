@@ -41,6 +41,5 @@
 			<?php endif; ?>
 			
 			<li><a href="<?php echo ADRESSE_SITE; ?>/admin/moncompte/edit/<?php echo security::returnId(); ?>">mon compte</a></li>
-			<li><a href='#'>Contact</a></li>
 		</ul>
 	</div>

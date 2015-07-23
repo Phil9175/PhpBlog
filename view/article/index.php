@@ -9,37 +9,49 @@
 			<?php endif; ?>
 			</p>
 			<?php echo html_entity_decode($contenu); ?> </div>
+		<?php if (!empty($tabArticles)): ?>
 		<div class="grid grid-pad">
 			<h2 class="blue">Vous aimerez aussi certainement les articles suivants :</h2>
 			<?php foreach($tabArticles as $key => $value): ?>
 			<div class="col-1-3"> <a href="<?php echo ADRESSE_SITE."/".$value['article_url']; ?>"><?php echo $value['titre']; ?></a></div>
 			<?php endforeach; ?>
 		</div>
-			<?php
+		<?php
+			endif;
 			if (security::is_connected()): 
+			?>
+		<div class="grid grid-pad comment">
+			<div class="col-1-3">Votre commentaire :</div>
+			<div class="col-2-3">
+				<?php
 				$formulaire = new formulaire("commentAdd", "", "POST", "/".$urlArticle."/comment", "");
-				$formulaire->ajoutElement("Commentaire", "textarea", "commentaire", "", "commentaire", "TRUE", "", "", "", "10", "60");
-				$formulaire->ajoutElement("Envoyer le commentaire", "submit", "commenter", "", "", "", "Envoyer le commentaire", "", "", "", "");
+				$formulaire->ajoutElement("", "textarea", "commentaire", "entryInput", "commentaire", "TRUE", "", "", "", "10", "66");
+				$formulaire->ajoutElement("Envoyer le commentaire", "submit", "commenter", "entryInput", "", "", "Envoyer le commentaire", "", "", "", "");
 				echo $formulaire->afficheForm();
 			endif;
 			?>
-			<?php
+			</div>
+		</div>
+		<?php
 			if (!empty($commentaire)):
 				foreach($commentaire as $key => $value):
 			?>
 		<div class="grid grid-pad comment">
-			<div class="col-1-3"> Publié le <br><?php echo date('d/m/Y \à H:i:s', strtotime($value['date_publication'])); ?><br>par <a href="/profil/view/<?php echo $value['idUtilisateur']; ?>"><?php echo $value['pseudo']; ?></a> 
-			<?php
+			<div class="col-1-3"> Publié le <br>
+				<?php echo date('d/m/Y \à H:i:s', strtotime($value['date_publication'])); ?><br>
+				par <a href="/profil/view/<?php echo $value['idUtilisateur']; ?>"><?php echo $value['pseudo']; ?></a>
+				<?php
 				if (security::get_can_modify_commentaire(security::returnId())):
 			?>
-				<br><br><a href="/<?php echo $urlArticle; ?>/delete/<?php echo $value['idCommentaire']; ?>"><i class="fa fa-trash-o"></i> Supprimer</a>
-			<?php
+				<br>
+				<br>
+				<a href="/<?php echo $urlArticle; ?>/delete/<?php echo $value['idCommentaire']; ?>"><i class="fa fa-trash-o"></i> Supprimer</a>
+				<?php
 				endif;
 			?>
 			</div>
 			<div class="col-2-3"> <?php echo $value['texte']; ?> </div>
 		</div>
-		
 		<?php
 				endforeach;
 			endif;
