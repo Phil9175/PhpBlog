@@ -17,11 +17,9 @@
 			?>
       </ul>
 	<?php
-	 	$formulaire = new formulaire("addUser", "", "POST", "/inscription/add", "");
+	 	$formulaire = new formulaire("oubliPass", "", "POST", "/inscription/oubli", "");
         $formulaire->ajoutElement("Email", "text", "email", "entryInput", "email", "TRUE", "", "", ["email" => ""], "", "");
-        $formulaire->ajoutElement("Pseudo", "text", "pseudo", "entryInput", "pseudo", "TRUE", "", "", "", "", "");
-		$formulaire->ajoutElement("Mot de passe", "password", "pass", "entryInput", "pass", "TRUE", "", "", "", "", "");
-        $formulaire->ajoutElement("S'enregistrer ", "submit", "enregistrer", "entryInput", "", "", "Enregistrer l'utilisateur", "", "", "", "");
+        $formulaire->ajoutElement("Retrouver mon mot de pass", "submit", "enregistrer", "entryInput", "", "", "Enregistrer l'utilisateur", "", "", "", "");
         echo $formulaire->afficheForm();
 	
 	?>

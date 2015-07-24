@@ -330,7 +330,10 @@ class admin
 							$utilisateur->set_can_modify_commentaire($args['set_can_modify_commentaire']);
 							$utilisateur->set_can_modify_menu($args['set_can_modify_menu']);
 							$utilisateur->set_can_add_page($args['set_can_add_page']);
-							$utilisateur->set_is_banned("0");
+							$utilisateur->set_is_validate($args['set_is_validate']);
+							$utilisateur->set_is_validate(1);
+							$utilisateur->set_is_banned(0);
+							$utilisateur->set_mdp_generate(0);
 							$utilisateur->save("users");
 							}else{
 							$view->assign("errors", $errors);
@@ -387,6 +390,8 @@ class admin
 								$utilisateur->set_can_modify_menu($args['set_can_modify_menu']);
 								$utilisateur->set_token($selectUser->get_token());
 								$utilisateur->set_is_banned($selectUser->get_is_banned());
+								$utilisateur->set_is_validate($args['is_validate']);
+								$utilisateur->set_mdp_generate($selectUser->get_mdp_generate());
 								$utilisateur->save("users");
 							}else{
 							$view->assign("errors", $errors);
@@ -408,6 +413,7 @@ class admin
 					$view->assign("can_modify_commentaire", $utilisateurAModifier->get_can_modify_commentaire());
 					$view->assign("can_modify_menu", $utilisateurAModifier->get_can_modify_menu());
 					$view->assign("can_add_page", $utilisateurAModifier->get_can_add_page());
+					$view->assign("is_validate", $utilisateurAModifier->get_is_validate());
 				}
 			}else{
 				header('HTTP/1.0 302 Found');
@@ -582,7 +588,7 @@ class admin
 	
 	public function moncompte($args){
 		if (isset($args[1])){
-			if (security::is_connected() === TRUE && security::returnId() == $args[1]) {
+			if (security::is_connected() === TRUE) {
 					if ($args[0] == "edit"){
 							$view  = new view("admin", "users/me", "admin.layout");
 							$view->assign("meta_title", "Modification utilisateur");
@@ -594,7 +600,7 @@ class admin
 								$selectUser = new users;
 								$selectUser->getOneBy($args['pseudo'], "pseudo", "users");
 								$selectUser->setFromBdd($selectUser->result);				
-								if (is_numeric($selectUser->get_id()) && $selectUser->get_id() != intval($args[1])){
+								if (is_numeric($selectUser->get_id()) && $selectUser->get_id() != intval(security::returnId())){
 									$errors[] = "Un utilisateur existe deja avec ce pseudo";
 									$nbErreurs++;
 								}
@@ -602,14 +608,14 @@ class admin
 								$selectUser = new users;
 								$selectUser->getOneBy($args['email'], "email", "users");
 								$selectUser->setFromBdd($selectUser->result);				
-								if (is_numeric($selectUser->get_id()) && $selectUser->get_id() != intval($args[1])){
+								if (is_numeric($selectUser->get_id()) && $selectUser->get_id() != intval(security::returnId())){
 									$errors[] = "Un utilisateur existe deja avec cet email";
 									$nbErreurs++;
 								}
 								if ($nbErreurs == 0){
 									unset($selectUser);
 									$selectUser = new users;
-									$selectUser->getOneBy(intval($args['1']), "id", "users");
+									$selectUser->getOneBy(intval(security::returnId()), "id", "users");
 									$selectUser->setFromBdd($selectUser->result);	
 									$utilisateur = new users;
 									$utilisateur->set_id($selectUser->get_id());
@@ -618,6 +624,8 @@ class admin
 									$utilisateur->set_date_inscription($selectUser->Get_date_inscription());
 									if ($args['pass'] != ""){
 										$utilisateur->set_password(security::makePassword($args['pass']));
+										$_SESSION['mdp_generate'] = 0;
+										$utilisateur->set_mdp_generate("0");
 									}else{
 										$utilisateur->set_password($selectUser->get_password());
 									}
@@ -625,8 +633,10 @@ class admin
 									$utilisateur->set_can_modify_user($selectUser->get_can_modify_user());
 									$utilisateur->set_can_modify_page($selectUser->get_can_modify_page());
 									$utilisateur->set_can_modify_commentaire($selectUser->get_can_modify_commentaire());
+									$utilisateur->set_can_modify_menu($selectUser->get_can_modify_menu());
 									$utilisateur->set_can_add_page($selectUser->get_can_add_page());
 									$utilisateur->set_is_banned($selectUser->get_is_banned());
+									$utilisateur->set_is_validate($selectUser->get_is_validate());
 									$utilisateur->set_token($selectUser->get_token());
 									$utilisateur->save("users");
 								}else{
@@ -644,9 +654,6 @@ class admin
 						$view->assign("email", $utilisateurAModifier->get_email());
 					}
 				}else{
-					header('HTTP/1.0 302 Found');
-					header("Location : ".ADRESSE_SITE."/admin/disconnect"); 
-					exit;
 				}
 		}else{
 			header('HTTP/1.0 302 Found');

@@ -1,11 +1,5 @@
 
 --
--- Database: `journaldureferencement`
---
-
--- --------------------------------------------------------
-
---
 -- Table structure for table `article`
 --
 
@@ -134,7 +128,14 @@ CREATE TABLE `commentaire` (
   `date_publication` datetime DEFAULT NULL,
   `idArticle` int(11) NOT NULL,
   `idUsers` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8;
+
+--
+-- Dumping data for table `commentaire`
+--
+
+INSERT INTO `commentaire` (`id`, `texte`, `date_publication`, `idArticle`, `idUsers`) VALUES
+(1, 'testrgeg', '2015-07-23 23:00:55', 67, 1);
 
 -- --------------------------------------------------------
 
@@ -181,21 +182,24 @@ CREATE TABLE `users` (
   `can_modify_commentaire` tinyint(1) DEFAULT NULL,
   `can_modify_menu` int(11) NOT NULL,
   `token` text,
-  `is_banned` int(11) DEFAULT NULL
+  `is_banned` int(11) DEFAULT NULL,
+  `is_validate` int(11) NOT NULL,
+  `token_validation` text,
+  `mdp_generate` int(11) DEFAULT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8;
 
 --
 -- Dumping data for table `users`
 --
 
-INSERT INTO `users` (`id`, `pseudo`, `email`, `date_inscription`, `password`, `can_modify_categories`, `can_modify_user`, `can_modify_page`, `can_add_page`, `can_modify_commentaire`, `can_modify_menu`, `token`, `is_banned`) VALUES
-(1, 'ppg', 'philgranger@orange.fr', '2015-04-02 00:00:00', 'b0b9029e6e88fcf7d4d5196b1478cde5c9eb14e7', 1, 1, 1, 1, 1, 1, 'ae9ed106bd3a343cb79ccb057a403e9cf875308f', 0),
-(2, 'ssf', 'stevesaintfleur@orange.fr', '2015-04-13 00:00:00', 'b0b9029e6e88fcf7d4d5196b1478cde5c9eb14e7', 0, 1, 0, 0, 0, 1, '', 0),
-(3, 'oualid', 'oualid@orange.fr', '2015-06-18 00:00:00', 'b0b9029e6e88fcf7d4d5196b1478cde5c9eb14e7', 0, 0, 0, 0, 1, 1, '', 0),
-(4, 'oierhgoiehg', 'dsfsdf@orange.fr', '2015-07-17 18:55:39', '421720b557fa58f44362c37e64e4ec40250edc88', 1, 0, 1, 0, 0, 0, '', 0),
-(6, 'ergrthtrhtrgoiehg', 'dsdfsdfdsff@orange.fr', '2015-07-17 18:55:39', '421720b557fa58f44362c37e64e4ec40250edc88', 0, 1, 0, 0, 1, 0, '', 0),
-(7, 'utilisateur', 'utilisateur@orange.fr', '2015-07-20 16:28:10', '319f39855ef67d0bcbbd640e9b7411615894d35d', 0, 0, 0, 0, 0, 0, NULL, 0),
-(8, 'testtest', 'test@facebook.com', '2015-07-20 16:29:55', '5984c75eebf5043b2416eaac122f7a47bdbacfa5', 0, 0, 0, 0, 0, 0, '44885f022e50c2bd3f906de645982dca1c0c4bee', 0);
+INSERT INTO `users` (`id`, `pseudo`, `email`, `date_inscription`, `password`, `can_modify_categories`, `can_modify_user`, `can_modify_page`, `can_add_page`, `can_modify_commentaire`, `can_modify_menu`, `token`, `is_banned`, `is_validate`, `token_validation`, `mdp_generate`) VALUES
+(1, 'ppg', 'philgranger@orange.fr', '2015-04-02 00:00:00', 'b0b9029e6e88fcf7d4d5196b1478cde5c9eb14e7', 1, 1, 1, 1, 1, 1, '921372fcf08e99430224ba1339599e6515f7de8b', 0, 1, NULL, NULL),
+(2, 'ssf', 'stevesaintfleur@orange.fr', '2015-04-13 00:00:00', 'b0b9029e6e88fcf7d4d5196b1478cde5c9eb14e7', 0, 1, 0, 0, 0, 1, '', 0, 1, NULL, 0),
+(3, 'oualid', 'oualid@orange.fr', '2015-06-18 00:00:00', 'b0b9029e6e88fcf7d4d5196b1478cde5c9eb14e7', 0, 0, 0, 0, 1, 1, '', 0, 0, '', 0),
+(4, 'oierhgoiehg', 'dsfsdf@orange.fr', '2015-07-17 18:55:39', '421720b557fa58f44362c37e64e4ec40250edc88', 1, 0, 1, 0, 0, 0, '', 0, 0, '', 0),
+(6, 'ergrthtrhtrgoiehg', 'dsdfsdfdsff@orange.fr', '2015-07-17 18:55:39', '421720b557fa58f44362c37e64e4ec40250edc88', 0, 1, 0, 0, 1, 0, '', 0, 0, '', 0),
+(7, 'utilisateur', 'utilisateur@orange.fr', '2015-07-20 16:28:10', '319f39855ef67d0bcbbd640e9b7411615894d35d', 0, 0, 0, 0, 0, 0, NULL, 0, 0, '', 0),
+(8, 'testtest', 'test@facebook.com', '2015-07-20 16:29:55', '5984c75eebf5043b2416eaac122f7a47bdbacfa5', 0, 0, 0, 0, 0, 0, '44885f022e50c2bd3f906de645982dca1c0c4bee', 0, 1, '', 0);
 
 --
 -- Indexes for dumped tables
@@ -256,7 +260,7 @@ ALTER TABLE `categorie`
 -- AUTO_INCREMENT for table `commentaire`
 --
 ALTER TABLE `commentaire`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT for table `menu`
 --

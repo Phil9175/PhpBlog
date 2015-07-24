@@ -14,6 +14,9 @@ class users extends bdd{
 	protected $can_modify_menu;
 	protected $token;
 	protected $is_banned;
+	protected $is_validate;
+	protected $token_validation;
+	protected $mdp_generate;
 	
 	public function __construct(){
 		parent::__construct();
@@ -77,6 +80,18 @@ class users extends bdd{
 		$this->is_banned = $is_banned;
 	}
 	
+	public function set_is_validate($is_validate){
+		$this->is_validate = $is_validate;
+	}
+	
+	public function set_token_validation($token_validation){
+		$this->token_validation = $token_validation;
+	}
+	
+	public function set_mdp_generate($mdp_generate){
+		$this->mdp_generate = $mdp_generate;
+	}
+	
 	public function get_id(){
 		return $this->id;
 	}
@@ -128,6 +143,17 @@ class users extends bdd{
 	public function get_is_banned(){
 		return $this->is_banned;
 	}
-
+	
+	public function get_is_validate(){
+		return $this->is_validate;
+	}
+	
+	public function get_token_validation(){
+		return $this->token_validation;
+	}
+	
+	public function get_mdp_generate(){
+		return $this->mdp_generate;
+	}
 }
 ?>

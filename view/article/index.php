@@ -10,7 +10,7 @@
 			</p>
 			<?php echo html_entity_decode($contenu); ?> </div>
 		<?php if (!empty($tabArticles)): ?>
-		<div class="grid grid-pad">
+		<div class="grid grid-pad left">
 			<h2 class="blue">Vous aimerez aussi certainement les articles suivants :</h2>
 			<?php foreach($tabArticles as $key => $value): ?>
 			<div class="col-1-3"> <a href="<?php echo ADRESSE_SITE."/".$value['article_url']; ?>"><?php echo $value['titre']; ?></a></div>

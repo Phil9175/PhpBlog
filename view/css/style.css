@@ -272,6 +272,9 @@ input.submitInput:hover{
 .justify{
 	text-align: justify;
 }
+.left{
+	text-align: left;
+}
 a{
 	color: #428bca;
 }

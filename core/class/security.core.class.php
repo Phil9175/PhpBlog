@@ -6,7 +6,7 @@ class security{
 			$utilisateur = new users;
 			$utilisateur->getOneBy($_SESSION["session"], "token", "users");
 			if (isset($utilisateur->result["id"])){
-				if ($utilisateur->result["id"] != 0 && $utilisateur->result["is_banned"] != 1){
+				if ($utilisateur->result["id"] != 0 && $utilisateur->result["is_banned"] != 1 && $utilisateur->result["is_validate"] == 1){
 					return TRUE;
 				}else{
 					return FALSE;
@@ -40,6 +40,7 @@ class security{
 			$uniqid = fonctions::id_aleatoire();
 			$_SESSION['session'] = $uniqid;
 			$_SESSION['nomUtilisateur'] = $utilisateur->get_pseudo();
+			$_SESSION['mdp_generate'] = $utilisateur->get_mdp_generate();
 			$utilisateur->set_token($uniqid);
 			$utilisateur->save("users");
 			header('HTTP/1.0 302 Found');
